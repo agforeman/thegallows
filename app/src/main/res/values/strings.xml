@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">The Gallows</string>
+    <string name="startscreen_temp">[StartScreen]</string>
+    <string name="endgame_temp">[Endgame Screen]</string>
+    <string name="gameplay_temp">[Gameplay Screen]</string>
+    <string name="settings_temp">[Settings Screen]</string>
+</resources>
