@@ -1,9 +1,9 @@
 package csci3320.thegallows;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
-public class Gameplay extends AppCompatActivity {
+public class Gameplay extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

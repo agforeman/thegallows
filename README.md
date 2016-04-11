@@ -1,1 +1,12 @@
-# thegallows
+# Commit History
+###### Notes for each commit 
+
+
+
+| _04/10/2016 - Justin_: |
+|--------------------------------|
+|`WordBank` class completed. See JAVADOC comments for details of each the class, main method, helper methods and constructor. The only method of `WordBank` that should be referenced is `getGameWord()`, which is the main method, as all of the other ones are helper methods. However, I make each method public so if we need to use one of the helper methods later down the road we can.  
+| I also created a "test_files" folder under java/csci3320/thegallows and within it included `TestWordBank`. This was the class that I used to test the `WordBank` class to verify that `getGameWord()` was returning the correct results. Each helper method was also tested in `TestWordBank`. Nothing needs to be done with this class, but I included it in case we need to perform additional testing on the functionality of `WordBank` in the future.
+| I created a folder under main called "assets" which contains four .txt files: "easy.txt", "medium.txt", "hard.txt" and "freeplay.txt". Each file has been populated with some words, however whether the words are valid for their associated difficulty level or not is not certain, so once we get the program working we'll have to review these libraries. "freeplay.txt" is simply a copy of the words in each file. I may modify the code of `getGameWord()` at a later point in time to select randomly from any other three other files to eliminate the redundancy of an aggregate file.
+| With the completion of `WordBank` and the population of the .txt difficulty libraries, the word generation feature of the `Gameplay` class can now be implemented. In `Gameplay`, to retrieve a word for a game, a new `WordBank` object must be created: `WordBank newWordBank = new WordBank(difficulty)`, where `difficulty` is an object of type String that can contain only the following Strings: "EASY", "MEDIUM", "HARD" or "FREEPLAY". I have not implemented error handling in `WordBank`, so we need to be sure we code the app to pass the correct constructor arguments to `WordBank`. |
+|I also tried to create a layout for the `Gameplay` activity (see `activity_gameplay.xml`). I've created the keyboard and plan on implementing the section of the screen where the words and the blanks display. That is, there is a `GridLayout` where half is dedicated to the "word area" and the other half dedicated to the timer, keyboard, and hangman animation. This "word area" will contain an interface that uses `WordBank`. I am going to try to get the word to appear in the `Gameplay` activity by before class on Tuesday. |

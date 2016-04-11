@@ -1,9 +1,9 @@
 package csci3320.thegallows;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
-public class Endgame extends AppCompatActivity {
+public class Endgame extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

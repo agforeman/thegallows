@@ -2,6 +2,40 @@
     <string name="app_name">The Gallows</string>
     <string name="startscreen_temp">[StartScreen]</string>
     <string name="endgame_temp">[Endgame Screen]</string>
-    <string name="gameplay_temp">[Gameplay Screen]</string>
+    <string name="gameplay1_temp">[Hangman animation goes here]</string>
+    <string name="gameplay2_temp">[Word area goes here]</string>
+    <string name="gameplay3_temp">[Score/time area goes here]</string>
+    <string name="gameplay4_temp">[Keyboard area goes here]</string>
     <string name="settings_temp">[Settings Screen]</string>
+
+    <string name="A">A</string>
+    <string name="B">B</string>
+    <string name="C">C</string>
+    <string name="D">D</string>
+    <string name="E">E</string>
+    <string name="F">F</string>
+    <string name="G">G</string>
+    <string name="H">H</string>
+    <string name="I">I</string>
+    <string name="J">J</string>
+    <string name="K">K</string>
+    <string name="L">L</string>
+    <string name="M">M</string>
+    <string name="N">N</string>
+    <string name="O">O</string>
+    <string name="P">P</string>
+    <string name="Q">Q</string>
+    <string name="R">R</string>
+    <string name="S">S</string>
+    <string name="T">T</string>
+    <string name="U">U</string>
+    <string name="V">V</string>
+    <string name="W">W</string>
+    <string name="X">X</string>
+    <string name="Y">Y</string>
+    <string name="Z">Z</string>
+
+    <string name="SUBMIT">SUBMIT!</string>
+
+
 </resources>
