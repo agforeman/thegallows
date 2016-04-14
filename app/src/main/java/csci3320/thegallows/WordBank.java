@@ -1,12 +1,10 @@
 package csci3320.thegallows;
 
+import android.content.Context;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.FileReader;
-import java.io.FileInputStream;
-import java.io.LineNumberReader;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.util.Random;
 
 
@@ -20,6 +18,8 @@ import java.util.Random;
  *
  */
 public class WordBank {
+
+    Context _appContext;
 
     /**
      * Stores a buffer that provides line-per-line access to a library file.
@@ -39,9 +39,13 @@ public class WordBank {
 
     /**
      * This is the main constructor for WordBank.
+     * @param appContext Needed to access the files stored in the assets folder outside of an activity
      * @param difficulty Only "EASY", "MEDIUM", "HARD" or "FREEPLAY" should be passed in.
      */
-    public WordBank(String difficulty) { _difficulty = difficulty; }
+    public WordBank(Context appContext, String difficulty) {
+        _appContext = appContext;
+        _difficulty = difficulty;
+    }
 
     /**
      * Method that reads from game_word_buff and stores a random line from the corresponding file
@@ -93,8 +97,8 @@ public class WordBank {
     public void initFileBuffer(String file_path) {
         try {
             game_word_buff = new BufferedReader(new InputStreamReader(
-                             new FileInputStream(file_path)));
-        } catch (FileNotFoundException e) { e.printStackTrace(); }
+                             _appContext.getAssets().open(file_path)));
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     /**
@@ -104,10 +108,10 @@ public class WordBank {
      */
     public String getFile(String file_type) {
         switch (file_type) {
-            case "EASY":     return "assets/easy.txt";
-            case "MEDIUM":   return "assets/medium.txt";
-            case "HARD":     return "assets/hard.txt";
-            case "FREEPLAY": return "assets/freeplay.txt";
+            case "EASY":     return "easy.txt";
+            case "MEDIUM":   return "medium.txt";
+            case "HARD":     return "hard.txt";
+            case "FREEPLAY": return "freeplay.txt";
 
             // The below line shouldn't ever be accessed, but a default case is required
             default:         return "no_file";
@@ -127,15 +131,13 @@ public class WordBank {
         int file_length = 0;
 
         try {
-            LineNumberReader ln_num = new LineNumberReader(new FileReader(file_path));
+            BufferedReader temp_buff = new BufferedReader(new InputStreamReader(
+                                       _appContext.getAssets().open(file_path)));
+            while(temp_buff.readLine() != null)
+                file_length++;
 
-            try {
-                // see http://stackoverflow.com/a/5342096/4736556
-                ln_num.skip(Long.MAX_VALUE);
-            } catch (IOException e) { e.printStackTrace(); }
-
-            file_length = ln_num.getLineNumber();
-        } catch (FileNotFoundException e) { e.printStackTrace(); }
+            temp_buff.close();
+        } catch (IOException e) { e.printStackTrace(); }
 
         return file_length;
     }

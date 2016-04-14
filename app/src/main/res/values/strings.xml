@@ -9,10 +9,10 @@
     <string name="change_difficulty_button">CHANGE DIFFICULTY</string>
     <string name="play_again_button">PLAY AGAIN?</string>
     <string name="endgame_temp">[Endgame Screen]</string>
-    <string name="gameplay1_temp">[Hangman animation goes here]</string>
-    <string name="gameplay2_temp">[Word area goes here]</string>
-    <string name="gameplay3_temp">[Score/time area goes here]</string>
-    <string name="gameplay4_temp">[Keyboard area goes here]</string>
+    <string name="gameplay1_temp">[Hangman Guy]</string>
+    <string name="gameplay2_temp">[Word Area]</string>
+    <string name="gameplay3_temp">[Score/Time]</string>
+    <string name="gameplay4_temp">[Spacer Image]</string>
     <string name="settings_temp">[Settings Screen]</string>
 
     <string name="A">A</string>
@@ -42,7 +42,10 @@
     <string name="Y">Y</string>
     <string name="Z">Z</string>
 
-    <string name="SUBMIT">SUBMIT!</string>
+    <string name="Vowels">Vowels: </string>
+    <string name="title_activity_gameplay1">Gameplay1</string>
+
+    <string name="WordUnderline">___</string>
 
 
 </resources>

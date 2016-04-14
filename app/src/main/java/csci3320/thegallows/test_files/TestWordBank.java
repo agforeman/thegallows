@@ -9,6 +9,7 @@
  * JAVADOC will not be specified for this file due to its insignificance to the app
  */
 
+/*
 package csci3320.thegallows.test_files;
 
 import csci3320.thegallows.WordBank;
@@ -112,3 +113,4 @@ public class TestWordBank {
             System.out.print(wb_f.getGameWord() + " ");
     }
 }
+*/
