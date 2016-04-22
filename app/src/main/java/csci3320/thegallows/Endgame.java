@@ -24,9 +24,18 @@ public class Endgame extends Activity {
             public void onClick(View v) {
                 Intent replayIntent = new Intent(v.getContext(), Gameplay.class);
                 replayIntent.putExtra("GameType",game_type);
-                replayIntent.putExtra("LEVEL", 1);
-                replayIntent.putExtra("LIFE", 3);
-                replayIntent.putExtra("HINTS", 3);
+
+                if (game_type.equals("FREEPLAY")) {
+                    replayIntent.putExtra("LEVEL", 0);
+                    replayIntent.putExtra("LIFE", 0);
+                    replayIntent.putExtra("HINTS", 1);
+                }
+                else if (game_type.equals("REGULAR")) {
+                    replayIntent.putExtra("LEVEL", 1);
+                    replayIntent.putExtra("LIFE", 3);
+                    replayIntent.putExtra("HINTS", 3);
+                }
+
                 startActivity(replayIntent);
             }
         });

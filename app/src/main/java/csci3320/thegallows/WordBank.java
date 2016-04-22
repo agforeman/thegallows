@@ -162,8 +162,7 @@ public class WordBank {
         if (_level == 0) {
             Random level_randomizer = new Random();
 
-            while (_level == 0)
-                _level = level_randomizer.nextInt(6);
+            _level = level_randomizer.nextInt(6) + 1;
         }
 
         switch (_level) {
