@@ -14,33 +14,18 @@ public class StartScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startscreen);
 
-        final Button buttonEasy = (Button) findViewById(R.id.easy_button);
-        final Button buttonMedium = (Button) findViewById(R.id.medium_button);
-        final Button buttonHard = (Button) findViewById(R.id.hard_button);
+        final Button buttonRegularPlay = (Button) findViewById(R.id.regular_play_button);
         final Button buttonFreeplay = (Button) findViewById(R.id.freeplay_button);
 
         final Intent launchGame = new Intent(this, Gameplay.class);
 
-        buttonEasy.setOnClickListener(new View.OnClickListener() {
+        buttonRegularPlay.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                launchGame.putExtra("Difficulty","EASY");
-                startActivity(launchGame);
-            }
-        });
-
-        buttonMedium.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchGame.putExtra("Difficulty","MEDIUM");
-                startActivity(launchGame);
-            }
-        });
-
-        buttonHard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchGame.putExtra("Difficulty","HARD");
+            public void onClick(View v){
+                launchGame.putExtra("GameType","REGULAR");
+                launchGame.putExtra("LEVEL", 1);
+                launchGame.putExtra("LIFE", 3);
+                launchGame.putExtra("HINTS", 3);
                 startActivity(launchGame);
             }
         });
@@ -48,7 +33,10 @@ public class StartScreen extends Activity {
         buttonFreeplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                launchGame.putExtra("Difficulty","FREEPLAY");
+                launchGame.putExtra("GameType","FREEPLAY");
+                launchGame.putExtra("LEVEL", 0);
+                launchGame.putExtra("LIFE", 0);
+                launchGame.putExtra("HINTS", 1);
                 startActivity(launchGame);
             }
         });

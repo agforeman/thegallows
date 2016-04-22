@@ -11,10 +11,10 @@
     tools:context="csci3320.thegallows.Endgame">
 
     <Button
-        android:id="@+id/change_difficulty_button"
+        android:id="@+id/main_menu_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/change_difficulty_button"
+        android:text="@string/main_menu_button"
         android:layout_alignParentBottom="true" />
 
     <Button
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/play_again_button"
-        android:layout_above="@id/change_difficulty_button"/>
+        android:layout_above="@id/main_menu_button"/>
 
     <ImageView
         android:layout_width="fill_parent"

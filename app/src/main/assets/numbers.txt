@@ -1,0 +1,348 @@
+ZERO
+adjust (as by firing under test conditions) the zero of (a gun)
+ONE
+of the same kind or quality
+TWO
+being one more than one
+THREE
+the cardinal number that is the sum of one and one and one
+FOUR
+the cardinal number that is the sum of three and one
+FIVE
+the cardinal number that is the sum of four and one
+SIX
+denoting a quantity consisting of six items or units
+SEVEN
+being one more than six
+EIGHT
+the cardinal number that is the sum of seven and one
+NINE
+a team of professional baseball players who play and travel together
+TEN
+being one more than nine
+ELEVEN
+being one more than ten
+TWELVE
+denoting a quantity consisting of 12 items or units
+THIRTEEN
+being one more than twelve
+FOURTEEN
+being one more than thirteen
+FIFTEEN
+being one more than fourteen
+SIXTEEN
+being one more than fifteen
+SEVENTEEN
+being one more than sixteen
+EIGHTEEN
+the cardinal number that is the sum of seventeen and one
+NINETEEN
+being one more than eighteen
+TWENTY
+a United States bill worth 20 dollars
+TWENTY
+denoting a quantity consisting of 20 items or units
+ONE
+having the indivisible character of a unit
+TWENTY
+the cardinal number that is the sum of nineteen and one
+TWO
+being one more than one
+TWENTY
+the cardinal number that is the sum of nineteen and one
+THREE
+the cardinal number that is the sum of one and one and one
+TWENTY
+denoting a quantity consisting of 20 items or units
+FOUR
+the cardinal number that is the sum of three and one
+TWENTY
+a United States bill worth 20 dollars
+FIVE
+a team that plays basketball
+TWENTY
+denoting a quantity consisting of 20 items or units
+SIX
+the cardinal number that is the sum of five and one
+TWENTY
+the cardinal number that is the sum of nineteen and one
+SEVEN
+being one more than six
+TWENTY
+a United States bill worth 20 dollars
+EIGHT
+a group of United States painters founded in 1907 and noted for their realistic depictions of sordid aspects of city life
+TWENTY
+the cardinal number that is the sum of nineteen and one
+NINE
+denoting a quantity consisting of one more than eight and one less than ten
+THIRTY
+being ten more than twenty
+THIRTY
+the cardinal number that is the product of ten and three
+ONE
+eminent beyond or above comparison
+THIRTY
+the cardinal number that is the product of ten and three
+TWO
+the cardinal number that is the sum of one and one or a numeral representing this number
+THIRTY
+the cardinal number that is the product of ten and three
+THREE
+the cardinal number that is the sum of one and one and one
+THIRTY
+the cardinal number that is the product of ten and three
+FOUR
+the cardinal number that is the sum of three and one
+THIRTY
+the cardinal number that is the product of ten and three
+FIVE
+a team that plays basketball
+THIRTY
+the cardinal number that is the product of ten and three
+SIX
+the cardinal number that is the sum of five and one
+THIRTY
+the cardinal number that is the product of ten and three
+SEVEN
+being one more than six
+THIRTY
+being ten more than twenty
+EIGHT
+the cardinal number that is the sum of seven and one
+THIRTY
+being ten more than twenty
+NINE
+a team of professional baseball players who play and travel together
+FORTY
+the cardinal number that is the product of ten and four
+FORTY
+the cardinal number that is the product of ten and four
+ONE
+the smallest whole number or a numeral representing this number
+FORTY
+the cardinal number that is the product of ten and four
+TWO
+the cardinal number that is the sum of one and one or a numeral representing this number
+FORTY
+being ten more than thirty
+THREE
+being one more than two
+FORTY
+the cardinal number that is the product of ten and four
+FOUR
+the cardinal number that is the sum of three and one
+FORTY
+the cardinal number that is the product of ten and four
+FIVE
+a team that plays basketball
+FORTY
+the cardinal number that is the product of ten and four
+SIX
+denoting a quantity consisting of six items or units
+FORTY
+the cardinal number that is the product of ten and four
+SEVEN
+being one more than six
+FORTY
+the cardinal number that is the product of ten and four
+EIGHT
+being one more than seven
+FORTY
+the cardinal number that is the product of ten and four
+NINE
+a team of professional baseball players who play and travel together
+FIFTY
+being ten more than forty
+FIFTY
+the cardinal number that is the product of ten and five
+ONE
+of the same kind or quality
+FIFTY
+being ten more than forty
+TWO
+being one more than one
+FIFTY
+being ten more than forty
+THREE
+being one more than two
+FIFTY
+a United States bill worth 50 dollars
+FOUR
+being one more than three
+FIFTY
+being ten more than forty
+FIVE
+being one more than four
+FIFTY
+being ten more than forty
+SIX
+denoting a quantity consisting of six items or units
+FIFTY
+the cardinal number that is the product of ten and five
+SEVEN
+the cardinal number that is the sum of six and one
+FIFTY
+the cardinal number that is the product of ten and five
+EIGHT
+being one more than seven
+FIFTY
+being ten more than forty
+NINE
+denoting a quantity consisting of one more than eight and one less than ten
+SIXTY
+the cardinal number that is the product of ten and six
+SIXTY
+being ten more than fifty
+ONE
+indefinite in time or position
+SIXTY
+the cardinal number that is the product of ten and six
+TWO
+being one more than one
+SIXTY
+being ten more than fifty
+THREE
+the cardinal number that is the sum of one and one and one
+SIXTY
+being ten more than fifty
+FOUR
+the cardinal number that is the sum of three and one
+SIXTY
+the cardinal number that is the product of ten and six
+FIVE
+the cardinal number that is the sum of four and one
+SIXTY
+the cardinal number that is the product of ten and six
+SIX
+the cardinal number that is the sum of five and one
+SIXTY
+the cardinal number that is the product of ten and six
+SEVEN
+being one more than six
+SIXTY
+being ten more than fifty
+EIGHT
+the cardinal number that is the sum of seven and one
+SIXTY
+being ten more than fifty
+NINE
+denoting a quantity consisting of one more than eight and one less than ten
+SEVENTY
+being ten more than sixty
+SEVENTY
+the cardinal number that is the product of ten and seven
+ONE
+being a single entity made by combining separate components
+SEVENTY
+the cardinal number that is the product of ten and seven
+TWO
+being one more than one
+SEVENTY
+being ten more than sixty
+THREE
+the cardinal number that is the sum of one and one and one
+SEVENTY
+the cardinal number that is the product of ten and seven
+FOUR
+being one more than three
+SEVENTY
+the cardinal number that is the product of ten and seven
+FIVE
+a team that plays basketball
+SEVENTY
+being ten more than sixty
+SIX
+denoting a quantity consisting of six items or units
+SEVENTY
+the cardinal number that is the product of ten and seven
+SEVEN
+being one more than six
+SEVENTY
+the cardinal number that is the product of ten and seven
+EIGHT
+a group of United States painters founded in 1907 and noted for their realistic depictions of sordid aspects of city life
+SEVENTY
+being ten more than sixty
+NINE
+denoting a quantity consisting of one more than eight and one less than ten
+EIGHTY
+the cardinal number that is the product of ten and eight
+EIGHTY
+the cardinal number that is the product of ten and eight
+ONE
+indefinite in time or position
+EIGHTY
+being ten more than seventy
+TWO
+being one more than one
+EIGHTY
+the cardinal number that is the product of ten and eight
+THREE
+being one more than two
+EIGHTY
+being ten more than seventy
+FOUR
+the cardinal number that is the sum of three and one
+EIGHTY
+the cardinal number that is the product of ten and eight
+FIVE
+the cardinal number that is the sum of four and one
+EIGHTY
+the cardinal number that is the product of ten and eight
+SIX
+the cardinal number that is the sum of five and one
+EIGHTY
+being ten more than seventy
+SEVEN
+the cardinal number that is the sum of six and one
+EIGHTY
+being ten more than seventy
+EIGHT
+the cardinal number that is the sum of seven and one
+EIGHTY
+the cardinal number that is the product of ten and eight
+NINE
+the cardinal number that is the sum of eight and one
+NINETY
+being ten more than eighty
+NINETY
+the cardinal number that is the product of ten and nine
+ONE
+indefinite in time or position
+NINETY
+the cardinal number that is the product of ten and nine
+TWO
+the cardinal number that is the sum of one and one or a numeral representing this number
+NINETY
+the cardinal number that is the product of ten and nine
+THREE
+being one more than two
+NINETY
+being ten more than eighty
+FOUR
+being one more than three
+NINETY
+being ten more than eighty
+FIVE
+being one more than four
+NINETY
+the cardinal number that is the product of ten and nine
+SIX
+the cardinal number that is the sum of five and one
+NINETY
+being ten more than eighty
+SEVEN
+the cardinal number that is the sum of six and one
+NINETY
+being ten more than eighty
+EIGHT
+a group of United States painters founded in 1907 and noted for their realistic depictions of sordid aspects of city life
+NINETY
+being ten more than eighty
+NINE
+denoting a quantity consisting of one more than eight and one less than ten
+ONE
+indefinite in time or position
+HUNDRED
+being ten more than ninety

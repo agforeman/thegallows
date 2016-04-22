@@ -14,25 +14,28 @@ public class Endgame extends Activity {
         setContentView(R.layout.activity_endgame);
 
         final Button buttonPlayAgain = (Button) findViewById(R.id.play_again_button);
-        final Button buttonChangeDifficulty = (Button) findViewById(R.id.change_difficulty_button);
+        final Button buttonMainMenu = (Button) findViewById(R.id.main_menu_button);
 
         final Intent incomingIntent = new Intent(getIntent());
-        final String difficulty = incomingIntent.getStringExtra("Difficulty");
+        final String game_type = incomingIntent.getStringExtra("GameType");
 
         buttonPlayAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent replayIntent = new Intent(v.getContext(), Gameplay.class);
-                replayIntent.putExtra("Difficulty", difficulty);
+                replayIntent.putExtra("GameType",game_type);
+                replayIntent.putExtra("LEVEL", 1);
+                replayIntent.putExtra("LIFE", 3);
+                replayIntent.putExtra("HINTS", 3);
                 startActivity(replayIntent);
             }
         });
 
-        buttonChangeDifficulty.setOnClickListener(new View.OnClickListener() {
+        buttonMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent changeDifficultyIntent = new Intent(v.getContext(), StartScreen.class);
-                startActivity(changeDifficultyIntent);
+                Intent mainMenuIntent = new Intent(v.getContext(), StartScreen.class);
+                startActivity(mainMenuIntent);
             }
         });
 

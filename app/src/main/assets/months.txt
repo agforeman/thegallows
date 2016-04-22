@@ -1,0 +1,24 @@
+JANUARY
+the first month of the year; begins 10 days after the winter solstice
+FEBRUARY
+the month following January and preceding March
+MARCH
+the month following February and preceding April
+APRIL
+the month following March and preceding May
+MAY
+the month following April and preceding June
+JUNE
+the month following May and preceding July
+JULY
+the month following June and preceding August
+AUGUST
+the month following July and preceding September
+SEPTEMBER
+the month following August and preceding October
+OCTOBER
+the month following September and preceding November
+NOVEMBER
+the month following October and preceding December
+DECEMBER
+the last (12th) month of the year

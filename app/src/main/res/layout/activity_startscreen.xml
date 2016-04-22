@@ -8,56 +8,44 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#FFFFFF">
 
-    <Button
-        android:id="@+id/freeplay_button"
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/freeplay_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="false" />
+        android:layout_height="match_parent"
+        android:weightSum="2">
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/freeplay_button"
-        android:id="@+id/difficulty_buttons">
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal" >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:layout_weight="2" />
 
-            <Button
-                android:id="@+id/easy_button"
-                android:layout_width="fill_parent"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/easy_button" />
+                android:id="@+id/gametype_buttons">
 
-            <Button
-                android:id="@+id/medium_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/medium_button" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/regular_play_button"
+                    android:text="@string/regular_play_button" />
 
-            <Button
-                android:id="@+id/hard_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/hard_button" />
-        </TableRow>
-    </TableLayout>
+                <Button
+                    android:id="@+id/freeplay_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/freeplay_button" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:id="@+id/imageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@id/difficulty_buttons"
-        android:layout_above="@id/difficulty_buttons" />
+            </TableLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

@@ -1,12 +1,8 @@
 <resources>
     <string name="app_name">The Gallows</string>
-    <!--The following line can now be deleted-->
-    <string name="startscreen_temp">[StartScreen]</string>
-    <string name="easy_button">EASY</string>
-    <string name="medium_button">MEDIUM</string>
-    <string name="hard_button">HARD</string>
-    <string name="freeplay_button">FREE PLAY</string>
-    <string name="change_difficulty_button">CHANGE DIFFICULTY</string>
+    <string name="regular_play_button">REGULAR PLAY</string>
+    <string name="freeplay_button">FREEPLAY</string>
+    <string name="main_menu_button">MAIN MENU</string>
     <string name="play_again_button">PLAY AGAIN?</string>
     <string name="endgame_temp">[Endgame Screen]</string>
     <string name="gameplay1_temp">[Hangman Guy]</string>
@@ -44,6 +40,7 @@
 
     <string name="Vowels">Vowels: </string>
     <string name="title_activity_gameplay1">Gameplay1</string>
+    <string name="HintButton">Use Hint</string>
 
     <string name="WordUnderline">___</string>
 
