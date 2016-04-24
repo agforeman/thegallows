@@ -166,12 +166,12 @@ public class WordBank {
         }
 
         switch (_level) {
-            case 1: return "numbers.txt";
-            case 2: return "days.txt";
-            case 3: return "months.txt";
-            case 4: return "us_states.txt";
-            case 5: return "us_state_capitals.txt";
-            case 6: return "nato_photonetic_alphabet.txt";/*
+            case 1: return "libraries/numbers.txt";
+            case 2: return "libraries/days.txt";
+            case 3: return "libraries/months.txt";
+            case 4: return "libraries/us_states.txt";
+            case 5: return "libraries/us_state_capitals.txt";
+            case 6: return "libraries/nato_photonetic_alphabet.txt";/*
             case 7: return "level7.txt";
             case 8: return "level8.txt";
             case 9: return "level9.txt";

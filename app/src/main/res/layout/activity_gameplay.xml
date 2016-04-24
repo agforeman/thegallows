@@ -77,12 +77,13 @@
         android:layout_weight="3">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:adjustViewBounds="false"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/hangman_area"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             android:background="#c80000"
-            android:contentDescription="Hangman drawing here" />
+            android:contentDescription="@string/IV_content_description" />
     </ScrollView>
 
     <ScrollView

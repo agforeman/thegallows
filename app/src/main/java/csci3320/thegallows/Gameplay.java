@@ -1,20 +1,26 @@
 package csci3320.thegallows;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Gameplay extends Activity {
@@ -28,6 +34,8 @@ public class Gameplay extends Activity {
                                  R.id.K, R.id.L, R.id.M, R.id.N, R.id.O,
                                  R.id.P, R.id.Q, R.id.R, R.id.S, R.id.T,
                                  R.id.U, R.id.V, R.id.W, R.id.X, R.id.Y, R.id.Z };
+
+    protected ImageView hangman_img;
 
     protected ArrayList<TextView> letter_arr = new ArrayList<>();
 
@@ -54,6 +62,7 @@ public class Gameplay extends Activity {
 
         initKeyboard();
         initGameStatusArea();
+        refreshHangmanArea(Math.abs(attempts - 6));
         initWordArea();
 
         play();
@@ -86,6 +95,36 @@ public class Gameplay extends Activity {
 
         LifesText.setText(lifes_str);
         HintsText.setText(hints_str);
+    }
+
+    protected void refreshHangmanArea(int stage_num) {
+        String file_path = "gameplay_images/";
+
+        switch (stage_num){
+            case 0: file_path += "stage0.png";
+                break;
+            case 1: file_path += "stage1.png";
+                break;
+            case 2: file_path += "stage2.png";
+                break;
+            case 3: file_path += "stage3.png";
+                break;
+            case 4: file_path += "stage4.png";
+                break;
+            case 5: file_path += "stage5.png";
+                break;
+            case 6: file_path += "stage6.png";
+        }
+
+        hangman_img = (ImageView) findViewById(R.id.hangman_area);
+
+        try {
+            InputStream imgStream = getAssets().open(file_path);
+            Drawable imgDrawable = Drawable.createFromStream(imgStream, null);
+            hangman_img.setImageDrawable(imgDrawable);
+        } catch (IOException e) { e.printStackTrace(); }
+
+
     }
 
     protected void initKeyboard() {
@@ -178,8 +217,10 @@ public class Gameplay extends Activity {
 
                     if (isValidLetter(button_letter))
                         updateAllOccurrences(button_letter);
-                    else
+                    else {
                         attempts--;
+                        refreshHangmanArea(Math.abs(attempts - 6));
+                    }
 
                     click.setVisibility(View.INVISIBLE);
 
