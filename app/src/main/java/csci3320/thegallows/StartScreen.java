@@ -2,8 +2,6 @@ package csci3320.thegallows;
 
 import android.app.Activity;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +9,9 @@ import android.widget.Button;
 import android.content.Intent;
 
 public class StartScreen extends Activity {
+
+    Button buttonRegularPlay = null;
+    Button buttonFreeplay = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +26,11 @@ public class StartScreen extends Activity {
         }
 
         // Get the Font Object
-        final Typeface chalkTypeFace = Typeface.createFromAsset(getAssets(), "fonts/SqueakyChalkSound.ttf");
+        final Typeface chalkTypeFace = Typeface.createFromAsset(getAssets(), "fonts/squeakychalksound.ttf");
 
         // Get the two buttons
-        final Button buttonRegularPlay = (Button) findViewById(R.id.regular_play_button);
-        final Button buttonFreeplay = (Button) findViewById(R.id.freeplay_button);
+        buttonRegularPlay = (Button) findViewById(R.id.regular_play_button);
+        buttonFreeplay = (Button) findViewById(R.id.freeplay_button);
 
         // Set the button font
         buttonRegularPlay.setTypeface(chalkTypeFace);
@@ -42,7 +43,8 @@ public class StartScreen extends Activity {
         buttonRegularPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                launchGame.putExtra("GameType","REGULAR");
+                buttonRegularPlay.setBackgroundColor(0x3C000000);
+                launchGame.putExtra("GameType", "REGULAR");
                 launchGame.putExtra("LEVEL", 1);
                 launchGame.putExtra("LIFE", 3);
                 launchGame.putExtra("HINTS", 3);
@@ -54,13 +56,22 @@ public class StartScreen extends Activity {
         buttonFreeplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                launchGame.putExtra("GameType","FREEPLAY");
+                buttonFreeplay.setBackgroundColor(0x3C000000);
+                launchGame.putExtra("GameType", "FREEPLAY");
                 launchGame.putExtra("LEVEL", 0);
                 launchGame.putExtra("LIFE", 0);
                 launchGame.putExtra("HINTS", 1);
                 startActivity(launchGame);
             }
         });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        buttonFreeplay.setBackgroundColor(0x00000000);
+        buttonRegularPlay.setBackgroundColor(0x00000000);
     }
 
     // Handle orientation changes Manually here.

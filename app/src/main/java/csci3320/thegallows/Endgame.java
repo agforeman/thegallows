@@ -2,8 +2,6 @@ package csci3320.thegallows;
 
 import android.app.Activity;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +26,7 @@ public class Endgame extends Activity {
         }
 
         // Get the Font Object
-        final Typeface chalkTypeFace = Typeface.createFromAsset(getAssets(), "fonts/SqueakyChalkSound.ttf");
+        final Typeface chalkTypeFace = Typeface.createFromAsset(getAssets(), "fonts/squeakychalksound.ttf");
 
         // Get the two buttons
         final Button buttonPlayAgain = (Button) findViewById(R.id.play_again_button);
@@ -60,6 +58,7 @@ public class Endgame extends Activity {
         buttonPlayAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonPlayAgain.setBackgroundColor(0x3C000000);
                 Intent replayIntent = new Intent(v.getContext(), Gameplay.class);
                 replayIntent.putExtra("GameType", game_type);
 
@@ -83,6 +82,7 @@ public class Endgame extends Activity {
         buttonMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonMainMenu.setBackgroundColor(0x3c000000);
                 Intent mainMenuIntent = new Intent(v.getContext(), StartScreen.class);
                 // Set this intent to call the StartScreen currently on the Activity stack.
                 mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

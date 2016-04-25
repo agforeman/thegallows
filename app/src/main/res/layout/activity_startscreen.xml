@@ -39,7 +39,8 @@
                 android:text="@string/regular_play_button"
                 android:textColor="#FFFFFF"
                 style="?android:attr/buttonBarButtonStyle"
-                android:background="#00ffffff" />
+                android:background="#00000000"
+                android:clickable="false" />
 
             <Button
                 android:id="@+id/freeplay_button"
