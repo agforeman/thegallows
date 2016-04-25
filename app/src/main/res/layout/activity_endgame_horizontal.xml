@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/greenboard">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".80"
+        android:id="@+id/ResultImage"
+        android:contentDescription="@string/endgame_img_description" />
+
+    <TableLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".20"
+        android:id="@+id/rightBar"
+        android:layout_gravity="center_vertical"
+        style="?android:attr/buttonBarStyle"
+        android:background="#00000000">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/play_again_button"
+            android:text="@string/play_again_button"
+            android:textColor="#FFFFFF"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="#00ffffff" />
+
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/main_menu_button"
+            android:id="@+id/main_menu_button"
+            android:textColor="#FFFFFF"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="#00ffffff" />
+    </TableLayout>
+</LinearLayout>

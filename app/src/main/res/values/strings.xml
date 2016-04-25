@@ -1,16 +1,13 @@
 <resources>
     <string name="app_name">The Gallows</string>
     <string name="regular_play_button">REGULAR PLAY</string>
-    <string name="freeplay_button">FREEPLAY</string>
+    <string name="freeplay_button">FREE PLAY</string>
     <string name="main_menu_button">MAIN MENU</string>
     <string name="play_again_button">PLAY AGAIN?</string>
-    <string name="endgame_temp">[Endgame Screen]</string>
-    <string name="gameplay1_temp">[Hangman Guy]</string>
-    <string name="gameplay2_temp">[Word Area]</string>
-    <string name="gameplay3_temp">[Score/Time]</string>
-    <string name="gameplay4_temp">[Spacer Image]</string>
     <string name="IV_content_description">Hangman Drawing</string>
     <string name="settings_temp">[Settings Screen]</string>
+    <string name="startscreen_img_description">Start Screen Image</string>
+    <string name="endgame_img_description">Game Result Image</string>
 
     <string name="A">A</string>
     <string name="B">B</string>

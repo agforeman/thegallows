@@ -12,14 +12,16 @@
 
         <activity android:name="csci3320.thegallows.Gameplay"/>
 
-        <activity android:name="csci3320.thegallows.StartScreen">
+        <activity android:name="csci3320.thegallows.StartScreen"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name="csci3320.thegallows.Endgame"/>
+        <activity android:name="csci3320.thegallows.Endgame"
+            android:configChanges="orientation|screenSize"/>
 
         <activity android:name="csci3320.thegallows.Settings"/>
     </application>
