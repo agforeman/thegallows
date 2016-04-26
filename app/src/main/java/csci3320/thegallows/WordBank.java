@@ -104,14 +104,15 @@ public class WordBank {
 
     public String getLevelCategoryString(int current_level) {
         switch(current_level) {
-            case 1: return "Numbers";
+            case 1: return "Animals";
             case 2: return "Days of the Week";
-            case 3: return "Months of the Year";
-            case 4: return "U.S. States";
-            case 5: return "U.S. State Capitals";
-            case 6: return "NATO Photonetic Alphabet";/*
-            case 7: return "[level 7 category]";
-            case 8: return "[level 8 category]";
+            case 3: return "Numbers";
+            case 4: return "Months of the Year";
+            case 5: return "U.S. States";
+            case 6: return "U.S. State Capitals";
+            case 7: return "Photonic Alphabet";
+            case 8: return "U.S. Presidents";
+            case 9: return "Celebrities";/*
             case 9: return "[level 9 category]";
             case 10: return "[level 10 category]";
             case 11: return "[level 11 category]";
@@ -162,18 +163,19 @@ public class WordBank {
         if (_level == 0) {
             Random level_randomizer = new Random();
 
-            _level = level_randomizer.nextInt(6) + 1;
+            _level = level_randomizer.nextInt(9) + 1;
         }
 
         switch (_level) {
-            case 1: return "libraries/numbers.txt";
+            case 1: return "libraries/animals.txt";
             case 2: return "libraries/days.txt";
-            case 3: return "libraries/months.txt";
-            case 4: return "libraries/us_states.txt";
-            case 5: return "libraries/us_state_capitals.txt";
-            case 6: return "libraries/nato_photonetic_alphabet.txt";/*
-            case 7: return "level7.txt";
-            case 8: return "level8.txt";
+            case 3: return "libraries/numbers.txt";
+            case 4: return "libraries/months.txt";
+            case 5: return "libraries/us_states.txt";
+            case 6: return "libraries/us_state_capitals.txt";
+            case 7: return "libraries/nato_photonetic_alphabet.txt";
+            case 8: return "libraries/us_presidents.txt";
+            case 9: return "libraries/celebrities.txt";/*
             case 9: return "level9.txt";
             case 10: return "level10.txt";
             case 11: return "level11.txt";

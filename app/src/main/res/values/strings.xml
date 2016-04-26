@@ -37,8 +37,9 @@
     <string name="Z">Z</string>
 
     <string name="Vowels">Vowels: </string>
-    <string name="title_activity_gameplay1">Gameplay1</string>
-    <string name="HintButton">Use Hint</string>
+    <string name="hintWindowTitle">Hint…</string>
+    <string name="HintButton">** Use Hint **</string>
+    <string name="CloseHintButton">Close</string>
 
     <string name="WordUnderline">___</string>
 

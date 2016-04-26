@@ -3,19 +3,23 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="3"
-    android:gravity="fill">
+    android:gravity="fill"
+    android:background="@drawable/greenboard"
+    android:id="@+id/MainLayout">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/LevelBar">
+        android:id="@+id/LevelBar"
+        android:background="@android:color/transparent">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/BarComponents"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:background="@android:color/transparent">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -23,7 +27,8 @@
                 android:layout_height="match_parent"
                 android:weightSum="2"
                 android:id="@+id/LevelAndCategory"
-                android:layout_weight=".5">
+                android:layout_weight=".5"
+                android:background="@android:color/transparent">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -31,7 +36,9 @@
                     android:id="@+id/LevelText"
                     android:layout_weight="1"
                     android:textSize="30sp"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:background="@android:color/transparent"
+                    android:textColor="#ffffff" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -39,7 +46,9 @@
                     android:id="@+id/CategoryText"
                     android:textSize="20sp"
                     android:layout_weight="1"
-                    android:gravity="bottom|center" />
+                    android:gravity="bottom|center"
+                    android:background="@android:color/transparent"
+                    android:textColor="#ffffff" />
             </LinearLayout>
 
             <LinearLayout
@@ -48,7 +57,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.25"
                 android:id="@+id/LifeAndHints"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:background="@android:color/transparent">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -56,7 +66,9 @@
                     android:id="@+id/LifesText"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    android:background="@android:color/transparent"
+                    android:textColor="#ffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,16 +77,21 @@
                     android:id="@+id/HintsText"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    android:background="@android:color/transparent"
+                    android:textColor="#ffffff" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-    <ScrollView
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/hangmanAreaContainer"
-        android:layout_weight="3">
+        android:id="@+id/horizontalScrollView"
+        android:layout_weight="3"
+        android:background="@android:color/transparent"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="25dp">
 
         <ImageView
             android:layout_width="fill_parent"
@@ -82,34 +99,40 @@
             android:id="@+id/hangman_area"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:background="#c80000"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/IV_content_description" />
+    </HorizontalScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/wordAreaContainer"
+        android:background="@android:color/transparent">
+
     </ScrollView>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/wordAreaContainer">
-
-    </ScrollView>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/HintArea" >
+        android:id="@+id/HintArea"
+        android:background="@android:color/transparent">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/HintButton"
-            android:id="@+id/HintKey" />
+            android:id="@+id/HintKey"
+            android:background="@drawable/button_design"
+            android:textColor="#000000"
+            android:textSize="20dp" />
     </ScrollView>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/keyboardAreaContainer"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:background="@android:color/transparent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -119,7 +142,8 @@
             android:weightSum="3"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:background="@android:color/transparent">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -131,7 +155,8 @@
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
                 android:paddingLeft="2dp"
-                android:paddingRight="2dp">
+                android:paddingRight="2dp"
+                android:background="@android:color/transparent">
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -139,7 +164,9 @@
                     android:text="@string/Q"
                     android:id="@+id/Q"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -147,7 +174,9 @@
                     android:text="@string/W"
                     android:id="@+id/W"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -155,7 +184,9 @@
                     android:text="@string/E"
                     android:id="@+id/E"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -163,7 +194,9 @@
                     android:text="@string/R"
                     android:id="@+id/R"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -171,7 +204,9 @@
                     android:text="@string/T"
                     android:id="@+id/T"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -179,7 +214,9 @@
                     android:text="@string/Y"
                     android:id="@+id/Y"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -187,7 +224,9 @@
                     android:text="@string/U"
                     android:id="@+id/U"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -195,7 +234,9 @@
                     android:text="@string/I"
                     android:id="@+id/I"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -203,7 +244,9 @@
                     android:text="@string/O"
                     android:id="@+id/O"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -211,7 +254,9 @@
                     android:text="@string/P"
                     android:id="@+id/P"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -221,7 +266,8 @@
                 android:id="@+id/row2"
                 android:weightSum="10"
                 android:layout_weight="1"
-                android:paddingBottom="3dp">
+                android:paddingBottom="3dp"
+                android:background="@android:color/transparent">
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -238,7 +284,9 @@
                     android:id="@+id/A"
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
-                    android:allowUndo="false" />
+                    android:allowUndo="false"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -247,7 +295,9 @@
                     android:id="@+id/S"
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
-                    android:allowUndo="false" />
+                    android:allowUndo="false"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -256,7 +306,9 @@
                     android:id="@+id/D"
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
-                    android:allowUndo="false" />
+                    android:allowUndo="false"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -265,7 +317,9 @@
                     android:id="@+id/F"
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
-                    android:allowUndo="false" />
+                    android:allowUndo="false"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -274,7 +328,9 @@
                     android:id="@+id/G"
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
-                    android:allowUndo="false" />
+                    android:allowUndo="false"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -283,7 +339,9 @@
                     android:id="@+id/H"
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
-                    android:allowUndo="false" />
+                    android:allowUndo="false"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -292,7 +350,9 @@
                     android:id="@+id/J"
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
-                    android:allowUndo="false" />
+                    android:allowUndo="false"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -301,7 +361,9 @@
                     android:id="@+id/K"
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
-                    android:allowUndo="false" />
+                    android:allowUndo="false"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -310,7 +372,9 @@
                     android:id="@+id/L"
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
-                    android:allowUndo="false" />
+                    android:allowUndo="false"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -328,7 +392,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/row3"
                 android:layout_weight="1"
-                android:paddingBottom="3dp">
+                android:paddingBottom="3dp"
+                android:background="@android:color/transparent">
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -345,7 +410,9 @@
                     android:id="@+id/Z"
                     android:visibility="visible"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -353,7 +420,9 @@
                     android:text="@string/X"
                     android:id="@+id/X"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -361,7 +430,9 @@
                     android:text="@string/C"
                     android:id="@+id/C"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -369,7 +440,9 @@
                     android:text="@string/V"
                     android:id="@+id/V"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -377,7 +450,9 @@
                     android:text="@string/B"
                     android:id="@+id/B"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -385,7 +460,9 @@
                     android:text="@string/N"
                     android:id="@+id/N"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -393,7 +470,9 @@
                     android:text="@string/M"
                     android:id="@+id/M"
                     android:layout_weight="1"
-                    android:background="@drawable/button_design" />
+                    android:background="@drawable/button_design"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
