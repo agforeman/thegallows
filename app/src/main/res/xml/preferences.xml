@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Preferences">
+        <ListPreference android:title="Background Color"
+            android:key="BackgroundColor" android:summary="Choose the Color of the Chalkboard"
+            android:entries="@array/bgColors" android:entryValues="@array/bgColorValues"
+            android:defaultValue="GREEN"/>
+    </PreferenceCategory>
+</PreferenceScreen>

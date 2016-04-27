@@ -6,6 +6,7 @@
     <string name="play_again_button">PLAY AGAIN?</string>
     <string name="IV_content_description">Hangman Drawing</string>
     <string name="settings_temp">[Settings Screen]</string>
+    <string name="settings_button">Settings...</string>
     <string name="startscreen_img_description">Start Screen Image</string>
     <string name="endgame_img_description">Game Result Image</string>
 
@@ -42,6 +43,18 @@
     <string name="CloseHintButton">Close</string>
 
     <string name="WordUnderline">___</string>
+
+    <!-- These are for Preferences -->
+    <string-array name="bgColors">
+        <item>Green</item>
+        <item>Black</item>
+        <item>Red</item>
+    </string-array>
+    <string-array name="bgColorValues">
+        <item>GREEN</item>
+        <item>BLACK</item>
+        <item>RED</item>
+    </string-array>
 
 
 </resources>

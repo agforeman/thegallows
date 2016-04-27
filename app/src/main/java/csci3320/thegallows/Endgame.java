@@ -1,43 +1,40 @@
 package csci3320.thegallows;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class Endgame extends Activity {
 
-    //final Intent incomingIntent = new Intent(getIntent());
+    Button buttonPlayAgain = null;
+    Button buttonMainMenu = null;
+    Button buttonSettings = null;
+    Intent incomingIntent = null;
+    Intent settingsIntent = null;
+    ImageView resultImage = null;
+    String background = null;
+    LinearLayout thisLayout = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Determine which layout file to use.
-        Configuration currentConfig = getResources().getConfiguration();
-        if (currentConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            setContentView(R.layout.activity_endgame);
-        } else if(currentConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            setContentView(R.layout.activity_endgame_horizontal);
-        }
+        chooseLayout();
 
-        // Get the Font Object
-        final Typeface chalkTypeFace = Typeface.createFromAsset(getAssets(), "fonts/squeakychalksound.ttf");
+        setBackgroundImg();
 
-        // Get the two buttons
-        final Button buttonPlayAgain = (Button) findViewById(R.id.play_again_button);
-        final Button buttonMainMenu = (Button) findViewById(R.id.main_menu_button);
-
-        // Set the font for each button
-        buttonPlayAgain.setTypeface(chalkTypeFace);
-        buttonMainMenu.setTypeface(chalkTypeFace);
+        buildButtons();
 
         // Get the incoming intent
-        final Intent incomingIntent = new Intent(getIntent());
+        incomingIntent = new Intent(getIntent());
         // Set the intent to call the StartScreen activity currently on the activity stack
         //incomingIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
@@ -47,12 +44,22 @@ public class Endgame extends Activity {
         final String game_type = incomingIntent.getStringExtra("GameType");
 
         // Set Win/Lose Image
-        final ImageView resultImage = (ImageView) findViewById(R.id.ResultImage);
+        resultImage = (ImageView) findViewById(R.id.ResultImage);
         if(result){
             resultImage.setImageResource(R.drawable.winimage);
         } else {
             resultImage.setImageResource(R.drawable.loseimage);
         }
+
+        settingsIntent = new Intent(this, Settings.class);
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonSettings.setBackgroundColor(0x3c000000);
+                settingsIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(settingsIntent);
+            }
+        });
 
         // Set Play Again button logic
         buttonPlayAgain.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +101,14 @@ public class Endgame extends Activity {
         });
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        buttonSettings.setBackgroundColor(0x00000000);
+        setBackgroundImg();
+    }
+
     // Handle orientation changes with this code
     @Override
     public void onConfigurationChanged(Configuration config){
@@ -114,5 +129,49 @@ public class Endgame extends Activity {
         mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         finish();
         startActivity(mainMenuIntent);
+    }
+
+    private void chooseLayout(){
+        // Determine which layout file to use
+        Configuration currentConfig = getResources().getConfiguration();
+        if (currentConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_endgame);
+        } else if(currentConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            setContentView(R.layout.activity_endgame_horizontal);
+        }
+    }
+
+    private void setBackgroundImg(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        background = prefs.getString("BackgroundColor", "");
+        thisLayout = (LinearLayout) findViewById(R.id.view_layout);
+
+        switch(background){
+            case "GREEN":
+                thisLayout.setBackgroundResource(R.drawable.greenboard);
+                break;
+            case "BLACK":
+                thisLayout.setBackgroundResource(R.drawable.blackboard);
+                break;
+            case "RED":
+                thisLayout.setBackgroundResource(R.drawable.redboard);
+                break;
+            default:
+                thisLayout.setBackgroundResource(R.drawable.greenboard);
+        }
+    }
+
+    private void buildButtons() {
+        final Typeface styleTypeFace = Typeface.createFromAsset(getAssets(), "fonts/squeakychalksound.ttf");
+
+        // Get the two buttons
+        buttonPlayAgain = (Button) findViewById(R.id.play_again_button);
+        buttonMainMenu = (Button) findViewById(R.id.main_menu_button);
+        buttonSettings = (Button) findViewById(R.id.settings_button);
+
+        // Set the button font
+        buttonPlayAgain.setTypeface(styleTypeFace);
+        buttonMainMenu.setTypeface(styleTypeFace);
+        buttonSettings.setTypeface(styleTypeFace);
     }
 }
