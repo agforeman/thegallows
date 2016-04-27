@@ -308,12 +308,12 @@ public class Gameplay extends Activity implements OnClickListener {
             if (LEVEL_NUM != 9) {
                 if (win) {
                     LEVEL_NUM++;
-                    Toast.makeText(Gameplay.this, "LEVEL CLEARED!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Gameplay.this, "LEVEL CLEARED!", Toast.LENGTH_LONG).show();
 
                     nextLevel();
                 }
                 else {
-                    Toast.makeText(Gameplay.this, "YOU DIED!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Gameplay.this, "YOU DIED!", Toast.LENGTH_LONG).show();
 
                     if (lifes != 0) {
                         lifes--;
