@@ -13,29 +13,27 @@ import java.util.Random;
  * "WordBank" objects contain the getGameWord() method, which returns a word for Hangman gameplay.
  *
  * @author  Justin Shapiro
- * @version 1.0
+ * @version 3.0
  * @since   2016-04-10
  *
  */
 public class WordBank {
-
+    /**
+     * The application context needs to be defined explicitly since WordBank does not extend Activity
+     */
     Context _appContext;
-
     /**
      * Stores a buffer that provides line-per-line access to a library file.
      */
     public BufferedReader game_word_buff;
-
     /**
      * Stores the word used in Hangman gameplay in a String object.
      */
     public String game_word = "";
-
     /**
      * Stores the hint associated with the game_word in a String object
      */
     public String game_hint = "";
-
     /**
      * Stores the library type to import in a String object.
      * This object is a copy of the argument passed to the WordBank constructor.
@@ -51,7 +49,6 @@ public class WordBank {
         _appContext = appContext;
         _level = level;
     }
-
     /**
      * Method that reads from game_word_buff and stores a random line from the corresponding file
      * in a String object.
@@ -67,14 +64,14 @@ public class WordBank {
 
         // Produce a random int in the range [0, getFileLength(getFile(_difficulty))]
         int game_word_location = location_randomizer.nextInt(
-                                 getFileLength(getFile()));
+                                 getNumWords(getFile()));
 
         int counter = 0; // loop counter used to keep track of line number relative to random int
         try {
             while (counter != game_word_location + 1) {
                 // Line number counter in the BufferReader object
                 // increments with each loop iteration
-                game_word_buff.mark(getFileLength(getFile()));
+                game_word_buff.mark(getNumWords(getFile()));
                 game_word_buff.readLine();
 
                 // When the line number counter in BufferedReader object equals the loop counter,
@@ -99,9 +96,16 @@ public class WordBank {
 
         return game_word;
     }
-
+    /**
+     * Method that returns the String that contains the hint for the currently selected word.
+     * In order for this method to return the correct value, it MUST be called AFTER getGameWord()
+     * @return The hint used for Hangman gameplay
+     */
     public String getGameHint() { return game_hint; }
-
+    /**
+     * Method that returns the topic of the current_level for use in Gameplay
+     * @param current_level The current level that the Gameplay activity is currently on
+     */
     public String getLevelCategoryString(int current_level) {
         switch(current_level) {
             case 1: return "Animals";
@@ -140,9 +144,10 @@ public class WordBank {
             default:         return "internal_error";
         }
     }
-
+    /**
+     * Method returns a String in the form of "Level #" for use in Gameplay
+     */
     public String getLevelString() { return "Level " + Integer.toString(_level); }
-
     /**
      * Method that links the selected library file to a BufferedReader with an InputStreamReader
      * that is initialized with a FileInputStream of the file
@@ -154,7 +159,6 @@ public class WordBank {
                              _appContext.getAssets().open(file_path)));
         } catch (IOException e) { e.printStackTrace(); }
     }
-
     /**
      * Method that returns the path of the library file based on the constructor argument
      * @return The path of the library file to select a gameplay word from
@@ -203,30 +207,37 @@ public class WordBank {
             default:         return "no_file";
         }
     }
-
     /**
-     * Method that uses LineNumberReader to get the number of lines in a library file.
-     * The number of lines in a library file indicates the number of words stored in it.
+     * Method that counts the number of words in a library file by dividing the number of lines by 2
+     * The number of lines divided by 2 in a library file indicates the number of words stored in it.
      * This number is required to produce the max range of random values to select from for
      * use in getGameWord().
      * @param file_path The location of the file to retrieve the number of lines from,
      *                  stored in a St  ring object
      * @return An int containing 1 less than the number of lines in a file
      */
-    public int getFileLength(String file_path) {
+    public int getNumWords(String file_path) {
         int file_length = 0;
 
         try {
+            // create temporary buffer for the file we are counting the lines of
             BufferedReader temp_buff = new BufferedReader(new InputStreamReader(
                                        _appContext.getAssets().open(file_path)));
+
+            // with each iteration of the loop, the line position in the buffer will be increment until null,
+            // and with each iteration, the file_length will be incremented
             while(temp_buff.readLine() != null)
                 file_length++;
 
             temp_buff.close();
         } catch (IOException e) { e.printStackTrace(); }
 
+        // file_length / 2 = the number of words in file
         return file_length / 2;
     }
-
+    /**
+     * Method that returns the current level that WordBank used to generate the word
+     * @return The current level
+     */
     public int getLevel() { return _level; }
 }

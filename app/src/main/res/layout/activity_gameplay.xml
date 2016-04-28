@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/LevelBar"
-        android:background="@android:color/transparent">
+        android:background="@android:color/transparent"
+        android:layout_marginTop="5dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -87,7 +88,7 @@
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/horizontalScrollView"
+        android:id="@+id/HangmanAreaContainer"
         android:layout_weight="3"
         android:background="@android:color/transparent"
         android:layout_marginLeft="80dp"
@@ -124,7 +125,7 @@
             android:id="@+id/HintKey"
             android:background="@drawable/button_design"
             android:textColor="#000000"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
     </ScrollView>
 
     <ScrollView
@@ -140,7 +141,6 @@
             android:layout_height="match_parent"
             android:id="@+id/keyboardAreaLayout"
             android:weightSum="3"
-            android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:visibility="visible"
             android:background="@android:color/transparent">
@@ -152,7 +152,6 @@
                 android:id="@+id/row1"
                 android:weightSum="10"
                 android:layout_weight="1"
-                android:paddingTop="3dp"
                 android:paddingBottom="3dp"
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
@@ -166,7 +165,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -176,7 +175,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -186,7 +185,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -196,7 +195,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -206,7 +205,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -216,7 +215,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -226,7 +225,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -236,7 +235,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -246,7 +245,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -256,7 +255,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -286,7 +285,7 @@
                     android:background="@drawable/button_design"
                     android:allowUndo="false"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -297,7 +296,7 @@
                     android:background="@drawable/button_design"
                     android:allowUndo="false"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -308,7 +307,7 @@
                     android:background="@drawable/button_design"
                     android:allowUndo="false"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -319,7 +318,7 @@
                     android:background="@drawable/button_design"
                     android:allowUndo="false"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -330,7 +329,7 @@
                     android:background="@drawable/button_design"
                     android:allowUndo="false"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -341,7 +340,7 @@
                     android:background="@drawable/button_design"
                     android:allowUndo="false"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -352,7 +351,7 @@
                     android:background="@drawable/button_design"
                     android:allowUndo="false"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -363,7 +362,7 @@
                     android:background="@drawable/button_design"
                     android:allowUndo="false"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -374,7 +373,7 @@
                     android:background="@drawable/button_design"
                     android:allowUndo="false"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -412,7 +411,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -422,7 +421,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -432,7 +431,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -442,7 +441,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -452,7 +451,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -462,7 +461,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -472,7 +471,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Button style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"

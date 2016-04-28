@@ -156,6 +156,21 @@ public class Endgame extends Activity {
             case "RED":
                 thisLayout.setBackgroundResource(R.drawable.redboard);
                 break;
+            case "BLUE":
+                thisLayout.setBackgroundResource(R.drawable.blueboard);
+                break;
+            case "CYAN":
+                thisLayout.setBackgroundResource(R.drawable.cyanboard);
+                break;
+            case "PURPLE":
+                thisLayout.setBackgroundResource(R.drawable.purpleboard);
+                break;
+            case "ORANGE":
+                thisLayout.setBackgroundResource(R.drawable.orangeboard);
+                break;
+            case "YELLOW":
+                thisLayout.setBackgroundResource(R.drawable.yellowboard);
+                break;
             default:
                 thisLayout.setBackgroundResource(R.drawable.greenboard);
         }

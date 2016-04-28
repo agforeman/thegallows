@@ -39,7 +39,7 @@
 
     <string name="Vowels">Vowels: </string>
     <string name="hintWindowTitle">Hint…</string>
-    <string name="HintButton">** Use Hint **</string>
+    <string name="HintButton">USE HINT</string>
     <string name="CloseHintButton">Close</string>
 
     <string name="WordUnderline">___</string>
@@ -49,11 +49,27 @@
         <item>Green</item>
         <item>Black</item>
         <item>Red</item>
+        <item>Blue</item>
+        <item>Indigo</item>
+        <item>Cyan</item>
+        <item>Purple</item>
+        <item>Pink</item>
+        <item>Orange</item>
+        <item>Yellow</item>
+        <item>Random!</item>
     </string-array>
     <string-array name="bgColorValues">
         <item>GREEN</item>
         <item>BLACK</item>
         <item>RED</item>
+        <item>BLUE</item>
+        <item>INDIGO</item>
+        <item>CYAN</item>
+        <item>PURPLE</item>
+        <item>PINK</item>
+        <item>ORANGE</item>
+        <item>YELLOW</item>
+        <item>RANDOM</item>
     </string-array>
 
 

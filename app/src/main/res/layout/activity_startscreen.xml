@@ -12,24 +12,14 @@
     android:orientation="vertical"
     tools:context="csci3320.thegallows.StartScreen">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="@string/settings_button"
-        android:id="@+id/settings_button"
-        android:layout_gravity="right"
-        android:layout_weight="0.10"
-        android:background="#00000000"
-        android:textColor="#FFFFFF"
-        android:padding="5sp" />
-
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="15dp"
         android:layout_weight=".80"
         android:id="@+id/SplashImage"
         android:src="@drawable/splashscreen"
-        android:contentDescription="SplashImage" />
+        android:contentDescription="SplashImage"
+        android:layout_gravity="top" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -68,4 +58,16 @@
 
         </TableRow>
     </TableLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/settings_button"
+        android:id="@+id/settings_button"
+        android:layout_weight="0.10"
+        android:background="#00000000"
+        android:textColor="#FFFFFF"
+        android:padding="5sp"
+        android:layout_gravity="center_horizontal" />
+
 </LinearLayout>
