@@ -46,31 +46,55 @@
 
     <!-- These are for Preferences -->
     <string-array name="bgColors">
-        <item>Green</item>
         <item>Black</item>
-        <item>Red</item>
         <item>Blue</item>
-        <item>Indigo</item>
         <item>Cyan</item>
-        <item>Purple</item>
-        <item>Pink</item>
+        <item>Green</item>
+        <item>Indigo</item>
         <item>Orange</item>
+        <item>Pink</item>
+        <item>Purple</item>
+        <item>Red</item>
+        <item>Violet</item>
         <item>Yellow</item>
+        <item>Default</item>
         <item>Random!</item>
     </string-array>
+
     <string-array name="bgColorValues">
-        <item>GREEN</item>
         <item>BLACK</item>
-        <item>RED</item>
         <item>BLUE</item>
-        <item>INDIGO</item>
         <item>CYAN</item>
-        <item>PURPLE</item>
-        <item>PINK</item>
+        <item>GREEN</item>
+        <item>INDIGO</item>
         <item>ORANGE</item>
+        <item>PINK</item>
+        <item>PURPLE</item>
+        <item>RED</item>
+        <item>VIOLET</item>
         <item>YELLOW</item>
+        <item>DEFAULT</item>
         <item>RANDOM</item>
     </string-array>
 
+    <string-array name="fpRound">
+        <item>1 round</item>
+        <item>2 rounds</item>
+        <item>3 rounds</item>
+        <item>4 rounds</item>
+        <item>5 rounds</item>
+        <item>10 rounds</item>
+        <item>15 rounds</item>
+    </string-array>
+
+    <string-array name="fpRoundValues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+    </string-array>
 
 </resources>

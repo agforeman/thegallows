@@ -3,6 +3,7 @@ package csci3320.thegallows;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -55,7 +56,11 @@ public class Endgame extends Activity {
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonSettings.setBackgroundColor(0x3c000000);
+                //buttonSettings.setBackgroundColor(0x3c000000);
+                buttonPlayAgain.setBackgroundResource(R.drawable.erasermark);
+                buttonPlayAgain.setTextColor(0x00000000);
+                buttonMainMenu.setBackgroundResource(R.drawable.erasermark);
+                buttonMainMenu.setTextColor(0x00000000);
                 settingsIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(settingsIntent);
             }
@@ -65,7 +70,11 @@ public class Endgame extends Activity {
         buttonPlayAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonPlayAgain.setBackgroundColor(0x3C000000);
+                //buttonPlayAgain.setBackgroundColor(0x3C000000);
+                buttonMainMenu.setBackgroundResource(R.drawable.erasermark);
+                buttonMainMenu.setTextColor(0x00000000);
+                buttonSettings.setBackgroundResource(R.drawable.erasermark);
+                buttonSettings.setTextColor(0x00000000);
                 Intent replayIntent = new Intent(v.getContext(), Gameplay.class);
                 replayIntent.putExtra("GameType", game_type);
 
@@ -89,7 +98,11 @@ public class Endgame extends Activity {
         buttonMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonMainMenu.setBackgroundColor(0x3c000000);
+                //buttonMainMenu.setBackgroundColor(0x3c000000);
+                buttonPlayAgain.setBackgroundResource(R.drawable.erasermark);
+                buttonPlayAgain.setTextColor(0x00000000);
+                buttonSettings.setBackgroundResource(R.drawable.erasermark);
+                buttonSettings.setTextColor(0x00000000);
                 Intent mainMenuIntent = new Intent(v.getContext(), StartScreen.class);
                 // Set this intent to call the StartScreen currently on the Activity stack.
                 mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -106,6 +119,10 @@ public class Endgame extends Activity {
         super.onResume();
 
         buttonSettings.setBackgroundColor(0x00000000);
+        buttonMainMenu.setBackgroundColor(0x00000000);
+        buttonPlayAgain.setBackgroundColor(0x00000000);
+        buttonPlayAgain.setTextColor(Color.WHITE);
+        buttonMainMenu.setTextColor(Color.WHITE);
         setBackgroundImg();
     }
 
@@ -147,14 +164,8 @@ public class Endgame extends Activity {
         thisLayout = (LinearLayout) findViewById(R.id.view_layout);
 
         switch(background){
-            case "GREEN":
-                thisLayout.setBackgroundResource(R.drawable.greenboard);
-                break;
             case "BLACK":
                 thisLayout.setBackgroundResource(R.drawable.blackboard);
-                break;
-            case "RED":
-                thisLayout.setBackgroundResource(R.drawable.redboard);
                 break;
             case "BLUE":
                 thisLayout.setBackgroundResource(R.drawable.blueboard);
@@ -162,17 +173,32 @@ public class Endgame extends Activity {
             case "CYAN":
                 thisLayout.setBackgroundResource(R.drawable.cyanboard);
                 break;
-            case "PURPLE":
-                thisLayout.setBackgroundResource(R.drawable.purpleboard);
+            case "GREEN":
+                thisLayout.setBackgroundResource(R.drawable.greenboard);
+                break;
+            case "INDIGO":
+                thisLayout.setBackgroundResource(R.drawable.indigoboard);
                 break;
             case "ORANGE":
                 thisLayout.setBackgroundResource(R.drawable.orangeboard);
+                break;
+            case "PINK":
+                thisLayout.setBackgroundResource(R.drawable.pinkboard);
+                break;
+            case "PURPLE":
+                thisLayout.setBackgroundResource(R.drawable.purpleboard);
+                break;
+            case "RED":
+                thisLayout.setBackgroundResource(R.drawable.redboard);
+                break;
+            case "VIOLET":
+                thisLayout.setBackgroundResource(R.drawable.violetboard);
                 break;
             case "YELLOW":
                 thisLayout.setBackgroundResource(R.drawable.yellowboard);
                 break;
             default:
-                thisLayout.setBackgroundResource(R.drawable.greenboard);
+                thisLayout.setBackgroundResource(R.drawable.defaultboard);
         }
     }
 
