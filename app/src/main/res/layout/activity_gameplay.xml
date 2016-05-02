@@ -4,8 +4,26 @@
     android:layout_height="match_parent"
     android:weightSum="3"
     android:gravity="fill"
-    android:background="@drawable/greenboard"
+    android:background="@drawable/defaultboard"
     android:id="@+id/MainLayout">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarContainer" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="5dp"
+            android:minHeight="5dp"
+            android:id="@+id/progressBar"
+            android:progress="0"
+            android:max="102"
+            android:background="#000000" />
+    </ScrollView>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/CategoryText"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:layout_weight="1"
                     android:gravity="bottom|center"
                     android:background="@android:color/transparent"
@@ -56,10 +74,10 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.25"
                 android:id="@+id/LifeAndHints"
                 android:weightSum="2"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent"
+                android:layout_weight="1.5">
 
                 <TextView
                     android:layout_width="wrap_content"

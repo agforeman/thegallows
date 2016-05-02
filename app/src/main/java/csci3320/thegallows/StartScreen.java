@@ -2,39 +2,76 @@ package csci3320.thegallows;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class StartScreen extends Activity {
+    private Typeface chalkTypeFace;
 
-    Button buttonRegularPlay = null;
-    Button buttonFreeplay = null;
-    Button buttonSettings = null;
-    Intent launchIntent = null;
-    Intent settingsIntent = null;
-    String background = null;
+    private Button buttonRegularPlay = null;
+    private Button buttonFreeplay = null;
+    private ImageButton buttonSettings = null;
+    private Intent launchIntent = null;
+    private Intent settingsIntent = null;
     LinearLayout thisLayout = null;
+    private LinearLayout navigation_buttons = null;
+    private ImageView logo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_startscreen);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        chooseLayout();
+        chalkTypeFace = Typeface.createFromAsset(getAssets(), "fonts/squeakychalksound.ttf");
 
-        setBackgroundImg();
+        thisLayout = (LinearLayout) findViewById(R.id.view_layout);
+        thisLayout.setBackgroundResource(R.drawable.startboard);
+        navigation_buttons = (LinearLayout) findViewById(R.id.navigation_buttons);
+
+        logo = (ImageView) findViewById(R.id.SplashImage);
 
         buildButtons();
+
+        logo.setImageBitmap(ReduceImageOverhead.decodeSampledBitmapFromResource(getResources(), R.drawable.splashscreen, 500, 500));
+
+        new Handler().postAtFrontOfQueue(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        logo.startAnimation(AnimationUtils.loadAnimation(StartScreen.this, R.anim.rotate3));
+                    }
+                });
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        buttonSettings.startAnimation(AnimationUtils.loadAnimation(StartScreen.this, R.anim.rotate1));
+                    }
+                });
+            }
+        });
 
         // Get an intent to launch the game
         launchIntent = new Intent(this, Gameplay.class);
@@ -44,16 +81,17 @@ public class StartScreen extends Activity {
         buttonRegularPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //buttonRegularPlay.setBackgroundColor(0x3C000000);
-                buttonFreeplay.setBackgroundResource(R.drawable.erasermark);
-                buttonFreeplay.setTextColor(0x00000000);
-                buttonSettings.setBackgroundResource(R.drawable.erasermark);
-                buttonSettings.setTextColor(0x00000000);
+                buttonFreeplay.setClickable(false);
+                buttonRegularPlay.setClickable(false);
+                buttonSettings.setClickable(false);
                 launchIntent.putExtra("GameType", "REGULAR");
                 launchIntent.putExtra("LEVEL", 1);
                 launchIntent.putExtra("LIFE", 3);
                 launchIntent.putExtra("HINTS", 3);
-                startActivity(launchIntent);
+                launchIntent.putExtra("WIN", true);
+                launchIntent.putExtra("PREVIOUS_BG", 0);
+                launchIntent.putExtra("LIFE_WARNING", false);
+                launchActivity(launchIntent, "REGULAR PLAY SELECTED");
             }
         });
 
@@ -61,28 +99,23 @@ public class StartScreen extends Activity {
         buttonFreeplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //buttonFreeplay.setBackgroundColor(0x3C000000);
-                buttonRegularPlay.setBackgroundResource(R.drawable.erasermark);
-                buttonRegularPlay.setTextColor(0x00000000);
-                buttonSettings.setBackgroundResource(R.drawable.erasermark);
-                buttonSettings.setTextColor(0x00000000);
+                buttonFreeplay.setClickable(false);
+                buttonRegularPlay.setClickable(false);
+                buttonSettings.setClickable(false);
                 launchIntent.putExtra("GameType", "FREEPLAY");
                 launchIntent.putExtra("LEVEL", 0);
+                launchIntent.putExtra("FP_MAX", Integer.parseInt(prefs.getString("FreeplayRounds", "")));
                 launchIntent.putExtra("LIFE", 0);
-                launchIntent.putExtra("HINTS", 1);
-                startActivity(launchIntent);
+                launchIntent.putExtra("HINTS", 0);
+                launchIntent.putExtra("WIN", true);
+                launchIntent.putExtra("PREVIOUS_BG", 0);
+                launchActivity(launchIntent, "FREEPLAY SELECTED");
             }
         });
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //buttonSettings.setBackgroundColor(0x3c000000);
-                buttonRegularPlay.setBackgroundResource(R.drawable.erasermark);
-                buttonRegularPlay.setTextColor(0x00000000);
-                buttonFreeplay.setBackgroundResource(R.drawable.erasermark);
-                buttonFreeplay.setTextColor(0x00000000);
-                settingsIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(settingsIntent);
             }
         });
@@ -96,88 +129,52 @@ public class StartScreen extends Activity {
         buttonFreeplay.setTextColor(Color.WHITE);
         buttonRegularPlay.setBackgroundColor(0x00000000);
         buttonRegularPlay.setTextColor(Color.WHITE);
-        buttonSettings.setBackgroundColor(0x00000000);
-        buttonSettings.setTextColor(Color.WHITE);
-
-        setBackgroundImg();
-    }
-
-    // Handle orientation changes Manually here.
-    @Override
-    public void onConfigurationChanged(Configuration config){
-        // Just reload this activity
-        super.onConfigurationChanged(config);
-        launchIntent = new Intent(this, StartScreen.class);
-        finish();
-        startActivity(launchIntent);
-    }
-
-    private void chooseLayout(){
-        // Determine which layout file to use
-        Configuration currentConfig = getResources().getConfiguration();
-        if (currentConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            setContentView(R.layout.activity_startscreen);
-        } else if(currentConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            setContentView(R.layout.activity_startscreen_horizontal);
-        }
-    }
-
-    private void setBackgroundImg(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        background = prefs.getString("BackgroundColor", "");
-        thisLayout = (LinearLayout) findViewById(R.id.view_layout);
-
-        switch(background){
-            case "BLACK":
-                thisLayout.setBackgroundResource(R.drawable.blackboard);
-                break;
-            case "BLUE":
-                thisLayout.setBackgroundResource(R.drawable.blueboard);
-                break;
-            case "CYAN":
-                thisLayout.setBackgroundResource(R.drawable.cyanboard);
-                break;
-            case "GREEN":
-                thisLayout.setBackgroundResource(R.drawable.greenboard);
-                break;
-            case "INDIGO":
-                thisLayout.setBackgroundResource(R.drawable.indigoboard);
-                break;
-            case "ORANGE":
-                thisLayout.setBackgroundResource(R.drawable.orangeboard);
-                break;
-            case "PINK":
-                thisLayout.setBackgroundResource(R.drawable.pinkboard);
-                break;
-            case "PURPLE":
-                thisLayout.setBackgroundResource(R.drawable.purpleboard);
-                break;
-            case "RED":
-                thisLayout.setBackgroundResource(R.drawable.redboard);
-                break;
-            case "VIOLET":
-                thisLayout.setBackgroundResource(R.drawable.violetboard);
-                break;
-            case "YELLOW":
-                thisLayout.setBackgroundResource(R.drawable.yellowboard);
-                break;
-            default:
-                thisLayout.setBackgroundResource(R.drawable.defaultboard);
-        }
     }
 
     private void buildButtons() {
-        final Typeface styleTypeFace = Typeface.createFromAsset(getAssets(), "fonts/squeakychalksound.ttf");
-
         // Get the two buttons
         buttonRegularPlay = (Button) findViewById(R.id.regular_play_button);
         buttonFreeplay = (Button) findViewById(R.id.freeplay_button);
-        buttonSettings = (Button) findViewById(R.id.settings_button);
+        buttonSettings = (ImageButton) findViewById(R.id.settings_button);
 
         // Set the button font
-        buttonRegularPlay.setTypeface(styleTypeFace);
-        buttonFreeplay.setTypeface(styleTypeFace);
-        buttonSettings.setTypeface(styleTypeFace);
+        buttonRegularPlay.setTypeface(chalkTypeFace);
+        buttonFreeplay.setTypeface(chalkTypeFace);
     }
 
+    private void launchActivity(final Intent activity, String toast_text) {
+        buttonFreeplay.setTextColor(Color.TRANSPARENT);
+        buttonRegularPlay.setTextColor(Color.TRANSPARENT);
+        navigation_buttons.setBackgroundColor(Color.TRANSPARENT);
+        Toast.makeText(this, toast_text, Toast.LENGTH_SHORT).show();
+        makeToast("GOOD LUCK!").show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                activity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                StartScreen.this.finish();
+                startActivity(activity);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        }, 4000);
+    }
+
+    private Toast makeToast(String text) {
+        Toast toast = new Toast(getApplicationContext());
+        Typeface chalkTypeFace = Typeface.createFromAsset(getAssets(), "fonts/squeakychalksound.ttf");
+
+        LayoutInflater toast_inflater = getLayoutInflater();
+        View toast_layout = toast_inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_layout_root));
+        TextView toast_text = (TextView) toast_layout.findViewById(R.id.toast_textview);
+        toast_text.setText(text);
+        toast_text.setTextColor(Color.WHITE);
+        toast_text.setTypeface(chalkTypeFace);
+
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(toast_layout);
+
+        return toast;
+    }
 }

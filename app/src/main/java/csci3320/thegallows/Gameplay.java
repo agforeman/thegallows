@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -16,12 +15,18 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View.OnClickListener;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -39,18 +44,36 @@ import java.util.Random;
  * and contains the logic that makes gameplay possible.
  *
  * @author  Justin Shapiro
- * @version 4.0
+ * @version 7.0
  * @since   2016-04-10
  *
 */
 public class Gameplay extends Activity implements OnClickListener {
     /**
-     * The font for most of the text for the app. The text in the hint dialog and Toasts
-     * are the only exception
+     * Stores a constant containing the number of attemps a user has to get a word right. This
+     * can't change unless we make more hangman images. Classically, this number is 6.
      */
-    private Typeface chalkTypeFace;
+    private final int ATTEMPTS_PER_GAME = 6;
     /**
-     * The Button object for the key that, when pressed, launches the hint dialog
+     * Stores the current level number. Used as a counter in Freeplay mode
+     */
+    private int LEVEL_NUM;
+
+    /**
+     * Stores the number of levels in the game. Used only in REGULAR gameplay.
+     */
+    public final int NUM_LEVELS = 17;
+    /**
+     * A LinearLayout object that holds the main activity container. This is only used to update
+     * the background color of the activity.
+     */
+    private LinearLayout thisLayout;
+    /**
+     * An ImageView object that will hold the images of the classic hangman figure during gameplay.
+     */
+    private ImageView hangman_img;
+    /**
+     * The Button object for the key that, when pressed, launches the hint dialog.
      */
     private Button hintKey;
     /**
@@ -58,21 +81,36 @@ public class Gameplay extends Activity implements OnClickListener {
      * Using an array is optimal for such bulk initialization of Buttons since we do not explicitly
      * need to name the variable each keyboard Button
      */
-    private Button[] keyboard = new Button[26];
+    private final Button[] keyboard = new Button[26];
     /**
      * keyboardID[] is a helper array to the keyboard[] array. It contains, sequentially, the IDs
      * of each keyboard variable A-Z. This simplifies the bulk keyboard Button initialization in
      * the initKeyboard() method.
      */
     private final int[] keyboardID = {R.id.A, R.id.B, R.id.C, R.id.D, R.id.E,
-                                      R.id.F, R.id.G, R.id.H, R.id.I, R.id.J,
-                                      R.id.K, R.id.L, R.id.M, R.id.N, R.id.O,
-                                      R.id.P, R.id.Q, R.id.R, R.id.S, R.id.T,
-                                      R.id.U, R.id.V, R.id.W, R.id.X, R.id.Y, R.id.Z};
+            R.id.F, R.id.G, R.id.H, R.id.I, R.id.J,
+            R.id.K, R.id.L, R.id.M, R.id.N, R.id.O,
+            R.id.P, R.id.Q, R.id.R, R.id.S, R.id.T,
+            R.id.U, R.id.V, R.id.W, R.id.X, R.id.Y, R.id.Z};
     /**
-     * An ImageView object that will hold the images of the classic hangman figure during gameplay.
+     * A ProgressBar object shows the user's progress during regular mode. This is updated throughout.
      */
-    protected ImageView hangman_img;
+    private ProgressBar progress_bar;
+    /**
+     * Logically, this Intent can be thought of as a recycled intent that launches and starts
+     * n Gameplay activities according to user Freeplay preferences and Regular Mode implementation.
+     */
+    public Intent CYCLIC_INTENT;
+    /**
+     * This is a SharedPreferences object that contains the methods need to retrieve user
+     * preferences for the game.
+     */
+    public SharedPreferences prefs;
+    /**
+     * The font for most of the text for the app. The text in the hint dialog and Toasts
+     * are the only exception.
+     */
+    private Typeface chalkTypeFace;
     /**
      * This String indicates the location of the image in assets that will go into the ImageView that
      * displays the hangman character.
@@ -87,13 +125,15 @@ public class Gameplay extends Activity implements OnClickListener {
      */
     protected ArrayList<TextView> letter_arr = new ArrayList<>();
     /**
-     * Stores the current level number. Used mainly in REGULAR gameplay.
+     * Stores the current level that is being done on freeplay mode.
+     * Used in the event that the user dies during freeplay mode. They have to clear the level before
+     * moving onto the next, random, level
      */
-    public int LEVEL_NUM;
+    public int FP_currentLevel;
     /**
-     * Stores the number of levels in the game. Used only in REGULAR gameplay.
+     * Stores the maximum amount of Gameplay activities that a CYCLIC_INTENT can exist in
      */
-    public final int NUM_LEVELS = 9;
+    public int FP_MAX;
     /**
      * Stores the number of lifes and hints the user currently has left in a REGULAR or FREEPLAY mode.
      */
@@ -101,17 +141,17 @@ public class Gameplay extends Activity implements OnClickListener {
     /**
      * Stores the String of the word used for gameplay and its associated hint, respectively.
      */
-    public String WORD = "", HINT = "";
+    public String WORD, HINT;
     /**
      * Stores the String that indicates the game mode.
      */
-    public String GAMETYPE = "";
+    public String GAMETYPE;
     /**
      * Stores the number of attempts the user will initially have. This number corresponds to the
      * body parts of the hangman character (head, arms, legs, and torso). This variable is decremented
      * with each incorrect guess.
      */
-    protected int attempts = 6;
+    private int attempts = ATTEMPTS_PER_GAME;
     /**
      * Keeps track of the number of correct letters the user has selected. When this variable is equal
      * to the size of the letter_arr, the user has cleared the current level.
@@ -128,6 +168,53 @@ public class Gameplay extends Activity implements OnClickListener {
      * a new hint.
      */
     public boolean hintSelected = false;
+    /**
+     * Keeps track of whether or not a user on their last life has been shown a warning message regarding
+     * thier low life. This exists to prevent the message from repeating more than once.
+     */
+    public boolean warningShowed = false;
+    /**
+     * Used if the user has set Random as their preference for color scheme in SharedPreferences. If
+     * the user dies, the activity will be regenerated with the same, random color from the previous
+     * activity until the user passes the LEVEL_NUM at which that activty is set.
+     */
+    public String backgroundIfRestart;
+    /**
+     * A LayoutInflater object that allows a custom Toast to be generated
+     */
+    public LayoutInflater toast_inflater;
+    /**
+     * A generic View object in which we store our custom Toast in.
+     */
+    public View toast_layout;
+    /**
+     * A TextView object that allows us to manage our own text within custom Toasts.
+     */
+    public TextView toast_text;
+
+    private boolean isFreeplay() { return GAMETYPE.equals("FREEPLAY"); }
+
+    private boolean isValidLetter(char selection) { return WORD.indexOf(selection) >= 0; }
+
+    private void retrieveIntents() {
+        GAMETYPE = getIntent().getStringExtra("GameType");
+        win = getIntent().getBooleanExtra("WIN", true);
+        backgroundIfRestart = getIntent().getStringExtra("PREVIOUS_BG");
+        LEVEL_NUM = getIntent().getIntExtra("LEVEL", -1);
+        lifes = getIntent().getIntExtra("LIFE", -1);
+        hints = getIntent().getIntExtra("HINTS", -1);
+        warningShowed = getIntent().getBooleanExtra("LIFE_WARNING", false);
+
+        if (isFreeplay()) {
+            FP_MAX = getIntent().getIntExtra("FP_MAX", -1);
+            FP_currentLevel = getIntent().getIntExtra("LAST_FP", -1);
+        }
+
+        if ((lifes == 0 && !warningShowed && !isFreeplay())) {
+            showToast("LAST TRY!");
+            warningShowed = true;
+        }
+    }
 
     /**
      * Initializes the UI. After this method is complete, onClick handles the rest of the activity
@@ -135,124 +222,335 @@ public class Gameplay extends Activity implements OnClickListener {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
 
-        // Initialize the global gameplay font for later use in initialization and updating
-        chalkTypeFace = Typeface.createFromAsset(getAssets(), "fonts/squeakychalksound.ttf");
-
-        // Retrieve all required Intents passed in from StartScreen for proper initialization of gameplay
-        GAMETYPE = getIntent().getStringExtra("GameType");
-        LEVEL_NUM = getIntent().getIntExtra("LEVEL", -1);
-        lifes = getIntent().getIntExtra("LIFE", -1);
-        hints = getIntent().getIntExtra("HINTS", -1);
-
-        // Initialize UI with the following function calls
-        setBackgroundImg();
-        initKeyboard();
-        initGameStatusArea();
-        initWordArea();
-        refreshHangmanArea(Math.abs(attempts - 6));
-
-        // After the above function calls take place, onClick handles the rest of the gameplay processing
+        /************************* THE GOLDEN SEVEN **************************************/
+        // Initialize UI with the following function calls. DO NOT REARRANGE THEIR ORDER!!/
+        /*******FIRST*************/initAssets();/*****************************************/
+        /*******SECOND************/retrieveIntents();/************************************/
+        /*******THIRD*************/setBackgroundImg();/***********************************/
+        /*******FOURTH************/initKeyboard();/***************************************/
+        /*******FIFTH*************/initWordArea();/***************************************/
+        /*******SIXTH*************/initGameStatusArea();/*********************************/
+        /*******SEVENTH***********/refreshHangmanArea(Math.abs(attempts - 6));/***********/
+        /******** After the above function calls take place, onClick handles the rest ****/
+        /*********************************************************************************/
     }
 
-    @Override
-    protected void onStart() {
-        // Once the UI is initialized, no additional processing needs to be done in onStart() since
-        // Gameplay extends OnClickListener, and in onClick() all the gameplay processing is done.
-        super.onStart();
-    }
+    public void onClick(final View click) {
+        final Button guess = (Button) click;
+        click.setEnabled(false);
 
-    @Override
-    protected void onRestart() {
-        // Just as no additional processing needs to be done in onStart(), nothing needs to be done
-        // in onRestart()
-        super.onRestart();
-    }
+        if (guess == hintKey) {
+            if (hints != 0 || hintSelected || isFreeplay()) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        createHintDialog();
 
-    @Override
-    protected void onResume() {
-        // Everything is saved in gloabal variables, so there is nothing to reinitialize
-        super.onResume();
-    }
+                        if (!hintSelected) {
+                            if (!isFreeplay())
+                                hints--;
+                            hintSelected = true;
 
-    @Override
-    protected void onPause() {
-        // There is no ongoing processes that run throughout the activity, so nothing needs to be
-        // stopped or saved for a later resume
-        super.onPause();
-    }
+                            String curr_hint_str = "Show Hint Again";
+                            guess.setText(curr_hint_str);
+                            guess.setTextSize(15);
+                        }
 
-    @Override
-    protected void onStop() {
-        // Since there is no ongoing processes that make gameplay possible, nothing needs to be
-        // stopped here
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        // No ongoing threads to be stopping here
-        super.onDestroy();
-    }
-
-    @Override
-    public void onBackPressed(){
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("End This Game?")
-                .setMessage("Hitting the back button will end this game and you will loose all progress. Continue?")
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Launch the StartScreen activity currently on the activity stack.
-                        Intent mainMenuIntent = new Intent(Gameplay.this, StartScreen.class);
-                        mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        Gameplay.this.finish();
-                        startActivity(mainMenuIntent);
+                        click.setEnabled(true);
                     }
-                }).create().show();
+                });
+            }
+        }
+        else {
+            final char button_letter = guess.getText().toString().charAt(0);
+
+            if (isValidLetter(button_letter)) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateAllOccurrences(button_letter);
+                    }
+                });
+            }
+            else {
+                attempts--;
+                refreshHangmanArea(Math.abs(attempts - 6));
+            }
+
+            click.setClickable(false);
+            ((Button) click).setTextColor(Color.TRANSPARENT);
+            click.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.erasermark));
+
+            if (attempts == 0 && letters_correct != letter_arr.size())
+                gameOver(false);
+            else if (letters_correct == letter_arr.size()) {
+                disableKeyboard();
+                gameOver(true);
+            }
+        }
     }
 
+    private void updateAllOccurrences(char button_letter) {
+        for (int i = 0; i < letter_arr.size(); i++) {
+            if (button_letter == letter_arr.get(i).getText().toString().charAt(0)) {
+                letter_arr.get(i).setTextColor(Color.WHITE);
+                letter_arr.get(i).startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate2));
+                letters_correct++;
+
+                updateProgress(true);
+            }
+        }
+    }
+
+    private void disableKeyboard() {
+        for (Button aKeyboard : keyboard) aKeyboard.setClickable(false);
+        hintKey.setClickable(false);
+    }
+
+    protected void gameOver(boolean _win) {
+        win = _win;
+
+        for (int i = 0; i < letter_arr.size(); i++) {
+            if (!win) {
+                letter_arr.get(i).setTextColor(Color.RED);
+                updateProgress(false);
+            }
+            else {
+                letter_arr.get(i).setTextColor(Color.GREEN);
+            }
+        }
+
+        if (win)
+            showToast("Level Cleared!");
+        else
+            showToast("You Died!");
+
+        if (!isFreeplay()) {
+            if (LEVEL_NUM != NUM_LEVELS) {
+                if (win) {
+                    LEVEL_NUM++;
+                    launchActivity(true);
+                }
+                else {
+                    if (lifes != 0) {
+                        lifes--;
+                        launchActivity(true);
+                    }
+                    else
+                        launchActivity(false);
+                }
+            }
+            else {
+                if (win)
+                    launchActivity(false);
+                else {
+                    if (lifes != 0)
+                        launchActivity(true);
+                    else {
+                        lifes--;
+                        launchActivity(false);
+                    }
+                }
+            }
+        }
+        else if (isFreeplay()) {
+            if (win) {
+                if (LEVEL_NUM == FP_MAX)
+                    launchActivity(false);
+                else
+                    launchActivity(true);
+            }
+            else
+                launchActivity(true);
+        }
+    }
+
+    private void launchActivity(boolean resume_cyclic) {
+        if (resume_cyclic)
+            CYCLIC_INTENT = new Intent(this, Gameplay.class);
+        else
+            CYCLIC_INTENT = new Intent(this, Endgame.class);
+
+        loadIntents();
+
+        Handler pause = new Handler();
+        pause.postDelayed(new Runnable() {
+            public void run() {
+                startActivity(CYCLIC_INTENT);
+                Gameplay.this.finish();
+                if (!win)
+                    overridePendingTransition(R.anim.fade_in_alt, R.anim.fade_out_alt);
+                else
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
+        }, 500);
+    }
+
+    private void loadIntents() {
+        CYCLIC_INTENT.putExtra("GameType", GAMETYPE);
+        CYCLIC_INTENT.putExtra("WIN", win);
+        CYCLIC_INTENT.putExtra("PREVIOUS_BG", backgroundIfRestart);
+        CYCLIC_INTENT.putExtra("LEVEL", LEVEL_NUM);
+        CYCLIC_INTENT.putExtra("LIFE", lifes);
+        CYCLIC_INTENT.putExtra("HINTS", hints);
+        CYCLIC_INTENT.putExtra("LIFE_WARNING", warningShowed);
+
+        if (isFreeplay()) {
+            CYCLIC_INTENT.putExtra("FP_MAX", FP_MAX);
+            CYCLIC_INTENT.putExtra("LAST_FP", FP_currentLevel);
+        }
+
+        CYCLIC_INTENT.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    }
+
+    private void createHintDialog() {
+        hintKey.setTextColor(Color.BLUE);
+
+        TextView HintsText = (TextView) findViewById(R.id.HintsText);
+        String new_hints_text_str = "Hints: " + Integer.toString(hints);
+        HintsText.setText(new_hints_text_str);
+
+        final Dialog hintWindow = new Dialog(Gameplay.this);
+        hintWindow.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        hintWindow.setContentView(R.layout.hint_dialog_layout);
+
+        TextView hintWindowTitle = (TextView) hintWindow.findViewById(R.id.hintWindowTitle);
+        String hint_window_title_str = "Hint";
+        hintWindowTitle.setText(hint_window_title_str);
+        hintWindowTitle.setTypeface(chalkTypeFace);
+
+        TextView hintTextArea = (TextView) hintWindow.findViewById(R.id.hintText);
+        hintTextArea.setText(HINT);
+
+        hintWindow.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        Button closeHintWindow = (Button) hintWindow.findViewById(R.id.close_hint);
+        closeHintWindow.setTypeface(chalkTypeFace);
+        closeHintWindow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hintKey.setTextColor(Color.BLACK);
+                hintWindow.dismiss();
+            }
+        });
+
+        hintWindow.show();
+    }
+
+    private void showToast(String text) {
+        Toast toast = new Toast(getApplicationContext());
+
+        toast_inflater = getLayoutInflater();
+        toast_layout = toast_inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_layout_root));
+        toast_text = (TextView) toast_layout.findViewById(R.id.toast_textview);
+        toast_text.setText(text);
+        toast_text.setTypeface(chalkTypeFace);
+
+        if (win)
+            toast_text.setTextColor(Color.GREEN);
+        else
+            toast_text.setTextColor(Color.RED);
+
+        toast.setGravity(Gravity.CENTER_VERTICAL, 25, -275);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(toast_layout);
+        toast.show();
+    }
+
+    private void updateProgress(boolean type) {
+        Animation update;
+        final float LEVEL_INFLATER = (float) ((LEVEL_NUM - 1) * ATTEMPTS_PER_GAME);
+        final float LETTER_PERCENTAGE = (float) ATTEMPTS_PER_GAME / (float) letter_arr.size();
+        float _to, _from;
+
+        if (type) {
+            _from = LEVEL_INFLATER + LETTER_PERCENTAGE * ((float)letters_correct - 1);
+            _to = LEVEL_INFLATER + LETTER_PERCENTAGE * ((float)letters_correct);
+        }
+        else {
+            _from = LEVEL_INFLATER + LETTER_PERCENTAGE * ((float)letters_correct);
+            _to = LEVEL_INFLATER;
+
+            progress_bar.setProgressDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.progress_red));
+            progress_bar.setMinimumHeight(5);
+        }
+
+        final float to = _to;
+        final float from = _from;
+        update = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                super.applyTransformation(interpolatedTime, t);
+                float value = from + (to - from) * interpolatedTime;
+                progress_bar.setProgress((int) value);
+            }
+        };
+
+        progress_bar.startAnimation(update);
+    }
+    /**
+     * Method that retrieves a String containing the key for the background color to be set for
+     * that particular activity instance. This key is generated in a previous activtity and passed
+     * to the current activty in a CYCLIC_INTENT.
+     */
     private void setBackgroundImg(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String background = prefs.getString("BackgroundColor", "");
-        LinearLayout thisLayout = (LinearLayout) findViewById(R.id.MainLayout);
+        thisLayout = (LinearLayout) findViewById(R.id.MainLayout);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String background = "";
+
+        if (!getIntent().getBooleanExtra("WIN", false))
+            background = getIntent().getStringExtra("PREVIOUS_BG");
+        else
+            background = prefs.getString("BackgroundColor", "");
 
         switch(background){
             case "GREEN":
-                thisLayout.setBackgroundResource(R.drawable.greenboard);
+                thisLayout.setBackgroundResource(R.drawable.defaultboard);
+                backgroundIfRestart = "GREEN";
                 break;
             case "BLACK":
                 thisLayout.setBackgroundResource(R.drawable.blackboard);
+                backgroundIfRestart = "BLACK";
                 break;
             case "RED":
                 thisLayout.setBackgroundResource(R.drawable.redboard);
+                backgroundIfRestart = "RED";
                 break;
             case "BLUE":
                 thisLayout.setBackgroundResource(R.drawable.blueboard);
+                backgroundIfRestart = "BLUE";
                 break;
             case "INDIGO":
                 thisLayout.setBackgroundResource(R.drawable.indigoboard);
+                backgroundIfRestart = "INDIGO";
                 break;
             case "CYAN":
                 thisLayout.setBackgroundResource(R.drawable.cyanboard);
+                backgroundIfRestart = "CYAN";
                 break;
             case "PURPLE":
                 thisLayout.setBackgroundResource(R.drawable.purpleboard);
+                backgroundIfRestart = "PURPLE";
                 break;
             case "PINK":
                 thisLayout.setBackgroundResource(R.drawable.pinkboard);
+                backgroundIfRestart = "PINK";
                 break;
             case "ORANGE":
                 thisLayout.setBackgroundResource(R.drawable.orangeboard);
+                backgroundIfRestart = "ORANGE";
                 break;
             case "YELLOW":
                 thisLayout.setBackgroundResource(R.drawable.yellowboard);
+                backgroundIfRestart = "YELLOW";
                 break;
             case "RANDOM":
-                int[] _backgrounds = {R.drawable.greenboard, R.drawable.blackboard, R.drawable.redboard,
+                int[] _backgrounds = {R.drawable.defaultboard, R.drawable.blackboard, R.drawable.redboard,
                                       R.drawable.blueboard, R.drawable.cyanboard, R.drawable.indigoboard,
                                       R.drawable.purpleboard, R.drawable.pinkboard, R.drawable.orangeboard,
                                       R.drawable.yellowboard};
@@ -262,13 +560,41 @@ public class Gameplay extends Activity implements OnClickListener {
 
                 thisLayout.setBackgroundResource(_backgrounds[random_drawable]);
 
+                switch(random_drawable) {
+                    case 0: backgroundIfRestart = "GREEN";
+                        break;
+                    case 1: backgroundIfRestart = "BLACK";
+                        break;
+                    case 2: backgroundIfRestart = "RED";
+                        break;
+                    case 3: backgroundIfRestart = "BLUE";
+                        break;
+                    case 4: backgroundIfRestart = "CYAN";
+                        break;
+                    case 5: backgroundIfRestart = "INDIGO";
+                        break;
+                    case 6: backgroundIfRestart = "PURPLE";
+                        break;
+                    case 7: backgroundIfRestart = "PINK";
+                        break;
+                    case 8: backgroundIfRestart = "ORANGE";
+                        break;
+                    case 9: backgroundIfRestart = "YELLOW";
+                        break;
+                    default: backgroundIfRestart = "GREEN";
+                }
                 break;
-
             default:
-                thisLayout.setBackgroundResource(R.drawable.greenboard);
+                thisLayout.setBackgroundResource(R.drawable.defaultboard);
+                backgroundIfRestart = "GREEN";
+                break;
         }
     }
 
+    private void initAssets() {
+        // Initialize the global gameplay font for later use in initialization and updating
+        chalkTypeFace = Typeface.createFromAsset(getAssets(), "fonts/squeakychalksound.ttf");
+    }
     /**
      * Method that initializes the Button objects for the keyboard and hintKey
      */
@@ -294,6 +620,9 @@ public class Gameplay extends Activity implements OnClickListener {
      * Method that initializes GameStatusArea, which shows the level, topics, and # of lifes and hints
      */
     public void initGameStatusArea() {
+        // initialize the hangman ImageView
+        hangman_img = (ImageView) findViewById(R.id.hangman_area);
+
         // create and link the four required TextView areas with their associated View IDs
         TextView LevelText =    (TextView) findViewById(R.id.LevelText),
                  CategoryText = (TextView) findViewById(R.id.CategoryText),
@@ -306,18 +635,33 @@ public class Gameplay extends Activity implements OnClickListener {
         LifesText.setTypeface(chalkTypeFace);
         HintsText.setTypeface(chalkTypeFace);
 
+        if ((LEVEL_NUM == 10 || LEVEL_NUM == 15) && !isFreeplay()) {
+            lifes += 2;
+            hints += 2;
+
+            Toast.makeText(getApplicationContext(), "+2 LIVES", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "+2 HINTS", Toast.LENGTH_SHORT).show();
+            showToast("Level " + LEVEL_NUM + " reached, Congrats!");
+        }
+
         // if, at the current level, there are no more hints available to the user, disable the
         // hintKey button, make its text transparent,
-        if (hints == 0) {
+        if (hints == 0 && !GAMETYPE.equals("FREEPLAY")) {
             hintKey.setTextColor(Color.TRANSPARENT);
             hintKey.setClickable(false);
             hintKey.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.erasermark));
         }
 
+        String lifes_str = "", hints_str = "";
+
         // if GAMETYPE == "FREEPLAY", do not show the Level #. if not, do show the level number
-        if (GAMETYPE.equals("FREEPLAY")) {
+        if (isFreeplay()) {
             String level_txt_str = "Freeplay";
             LevelText.setText(level_txt_str);
+
+            LinearLayout top_left = (LinearLayout) findViewById(R.id.LevelAndCategory);
+            top_left.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                                                   LinearLayout.LayoutParams.MATCH_PARENT, 0f));
         }
         else {
             // create a WordBank object to get the String values of the current level and associated category
@@ -325,13 +669,24 @@ public class Gameplay extends Activity implements OnClickListener {
 
             LevelText.setText(level_info.getLevelString());
             CategoryText.setText(level_info.getLevelCategoryString(level_info.getLevel()));
-        }
 
-        String lifes_str = "Lifes: " + Integer.toString(lifes),
-               hints_str = "Hints: " + Integer.toString(hints);
+            lifes_str = "Lifes: " + Integer.toString(lifes);
+            hints_str = "Hints: " + Integer.toString(hints);
+        }
 
         LifesText.setText(lifes_str);
         HintsText.setText(hints_str);
+
+        //initialize the progress bar
+        progress_bar = (ProgressBar) findViewById(R.id.progressBar);
+        if (isFreeplay()) {
+            progress_bar.setProgressDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.progress_white));
+            progress_bar.setMinimumHeight(5);
+            progress_bar.setMax(FP_MAX * ATTEMPTS_PER_GAME);
+            updateProgress(true);
+        }
+
+        updateProgress(true);
     }
     /**
      * Method that initializes the WordArea. Dynamically creates a TableLayout that sizes to the length
@@ -339,14 +694,25 @@ public class Gameplay extends Activity implements OnClickListener {
      * and Row 2 contains the an underline character for each letter.
      */
     public void initWordArea() {
-        WordBank game_word = new WordBank(getApplicationContext(), getIntent().getIntExtra("LEVEL", -1));
+        int _level = 0;
+
+        if (!isFreeplay())
+            _level = LEVEL_NUM;
+        else if (isFreeplay() && win)
+            LEVEL_NUM++;
+        else if (isFreeplay() && !win)
+            _level = FP_currentLevel;
+
+        WordBank game_word = new WordBank(getApplicationContext(), _level);
         WORD = game_word.getGameWord();
         HINT = game_word.getGameHint();
 
-        if (GAMETYPE.equals("FREEPLAY")) {
+        if (isFreeplay()) {
             TextView CategoryText = (TextView) findViewById(R.id.CategoryText);
             CategoryText.setText(game_word.getLevelCategoryString(game_word.getLevel()));
             CategoryText.setTypeface(chalkTypeFace);
+
+            FP_currentLevel = game_word.getLevel();
         }
 
         TableLayout.LayoutParams table_params = new TableLayout.LayoutParams();
@@ -362,26 +728,32 @@ public class Gameplay extends Activity implements OnClickListener {
                 TextView view = new TextView(this);
                 view.setBackgroundColor(Color.TRANSPARENT);
                 view.setTypeface(chalkTypeFace);
-                view.setTextSize(20);
                 view.setGravity(Gravity.CENTER);
+
+                if (WORD.length() > 13)
+                    view.setTextSize(17);
+                else if (WORD.length() > 16)
+                    view.setTextSize(15);
+                else
+                    view.setTextSize(20);
 
                 if (i == 0) {
                     view.setText(Character.toString(WORD.charAt(j)));
 
-                    if (Character.toString(WORD.charAt(j)).equals(" ") ||
-                            Character.toString(WORD.charAt(j)).equals("-")) {
+                    if (!Character.isLetter(WORD.charAt(j)))
                         view.setTextColor(Color.WHITE);
-                    }
                     else {
                         view.setTextColor(Color.TRANSPARENT);
                         letter_arr.add(view);
-                    }
+                   }
                 }
-                else if (i == 1){
-                    view.setText(R.string.WordUnderline);
+                else {
+                    if (WORD.length() < 13)
+                        view.setText(R.string.WordUnderline);
+                    else
+                        view.setText(R.string.WordUnderline2);
 
-                    if (Character.toString(WORD.charAt(j)).equals(" ") ||
-                            Character.toString(WORD.charAt(j)).equals("-"))
+                    if (!Character.isLetter(WORD.charAt(j)))
                         view.setTextColor(Color.TRANSPARENT);
                     else
                         view.setTextColor(Color.WHITE);
@@ -433,164 +805,61 @@ public class Gameplay extends Activity implements OnClickListener {
         }
     }
 
-    public void onClick(View click) {
-        Button guess = (Button) click;
-        click.setEnabled(false);
-
-        if (guess == hintKey) {
-            if (hints != 0 || hintSelected) {
-                if (!hintSelected) {
-                    hints--;
-                    hintSelected = true;
-
-                    String curr_hint_str = "Show Hint";
-                    guess.setText(curr_hint_str);
-                }
-
-                createHintDialog();
-            }
-        } else {
-            char button_letter = guess.getText().toString().charAt(0);
-
-            if (isValidLetter(button_letter))
-                updateAllOccurrences(button_letter);
-            else {
-                attempts--;
-                refreshHangmanArea(Math.abs(attempts - 6));
-            }
-
-            click.setClickable(false);
-            ((Button) click).setTextColor(Color.TRANSPARENT);
-            click.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.erasermark));
-
-            if (attempts == 0 && letters_correct != letter_arr.size())
-                gameOver(false);
-            else if (letters_correct == letter_arr.size())
-                gameOver(true);
-        }
-    }
-
-    protected void createHintDialog() {
-        TextView HintsText = (TextView) findViewById(R.id.HintsText);
-        String new_hints_text_str = "Hints: " + Integer.toString(hints);
-        HintsText.setText(new_hints_text_str);
-
-        final Dialog hintWindow = new Dialog(Gameplay.this);
-        hintWindow.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        hintWindow.setContentView(R.layout.hint_dialog_layout);
-
-        TextView hintWindowTitle = (TextView) hintWindow.findViewById(R.id.hintWindowTitle);
-        String hint_window_title_str = "Hint";
-        hintWindowTitle.setText(hint_window_title_str);
-        hintWindowTitle.setTypeface(chalkTypeFace);
-
-        TextView hintTextArea = (TextView) hintWindow.findViewById(R.id.hintText);
-        hintTextArea.setText(HINT);
-
-        Button closeHintWindow = (Button) hintWindow.findViewById(R.id.close_hint);
-        closeHintWindow.setTypeface(chalkTypeFace);
-        closeHintWindow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hintWindow.dismiss();
-            }
-        });
-
-        hintWindow.show();
-    }
-
-    private boolean isValidLetter(char selection) { return WORD.indexOf(selection) >= 0; }
-
-    private void updateAllOccurrences(char button_letter) {
-        for (int i = 0; i < letter_arr.size(); i++) {
-            if (button_letter == letter_arr.get(i).getText().toString().charAt(0)) {
-                letter_arr.get(i).setTextColor(Color.WHITE);
-                letters_correct++;
-            }
-        }
-    }
-
-    protected void gameOver(boolean _win) {
-        win = _win;
-
-        for (int i = 0; i < letter_arr.size(); i++) {
-            if (!win)
-                letter_arr.get(i).setTextColor(Color.RED);
-            else
-                letter_arr.get(i).setTextColor(Color.GREEN);
-        }
-
-        if (GAMETYPE.equals("REGULAR")) {
-            if (LEVEL_NUM != NUM_LEVELS) {
-                if (win) {
-                    LEVEL_NUM++;
-                    Toast.makeText(Gameplay.this, "LEVEL CLEARED!", Toast.LENGTH_LONG).show();
-
-                    nextLevel();
-                }
-                else {
-                    Toast.makeText(Gameplay.this, "YOU DIED!", Toast.LENGTH_LONG).show();
-
-                    if (lifes != 0) {
-                        lifes--;
-                        nextLevel();
+    @Override
+    public void onBackPressed(){
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("End This Game?")
+                .setMessage("You will loose all progress if you continue.")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent mainMenuIntent = new Intent(Gameplay.this, StartScreen.class);
+                        mainMenuIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        Gameplay.this.finish();
+                        startActivity(mainMenuIntent);
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
-                    else
-                        endGame();
-                }
-            }
-            else {
-                if (win) {
-                    Toast.makeText(Gameplay.this, "LEVEL CLEARED!", Toast.LENGTH_LONG).show();
-                    endGame();
-                }
-                else {
-                    Toast.makeText(Gameplay.this, "YOU DIED!", Toast.LENGTH_LONG).show();
-
-                    if (lifes != 0)
-                        nextLevel();
-                    else
-                        endGame();
-                }
-            }
-        }
-        else if (getIntent().getStringExtra("GameType").equals("FREEPLAY")) {
-            if (win)
-                Toast.makeText(Gameplay.this, "YOU SURVIVED!", Toast.LENGTH_LONG).show();
-            else
-                Toast.makeText(Gameplay.this, "YOU DIED!", Toast.LENGTH_LONG).show();
-
-            endGame();
-        }
+                }).create().show();
     }
 
-    private void nextLevel() {
-        Intent nextActivity = Gameplay.this.getIntent();
-        nextActivity.putExtra("LEVEL", LEVEL_NUM);
-        nextActivity.putExtra("LIFE", lifes);
-        nextActivity.putExtra("HINTS", hints);
-        nextActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        launchActivity(nextActivity);
+    @Override
+    protected void onStart() {
+        // Once the UI is initialized, no additional processing needs to be done in onStart() since
+        // Gameplay extends OnClickListener, and in onClick() all the gameplay processing is done.
+        super.onStart();
     }
 
-    private void endGame() {
-        Intent nextActivity = new Intent(this, Endgame.class);
-        nextActivity.putExtra("Result", win);
-        nextActivity.putExtra("Word", WORD);
-        nextActivity.putExtra("GameType", getIntent().getStringExtra("GameType"));
-        nextActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        launchActivity(nextActivity);
+    @Override
+    protected void onRestart() {
+        // Just as no additional processing needs to be done in onStart(), nothing needs to be done
+        // in onRestart()
+        super.onRestart();
     }
 
-    private void launchActivity(final Intent activity) {
-        Handler pause = new Handler();
-        pause.postDelayed(new Runnable() {
-            public void run() {
-                Gameplay.this.finish();
-                startActivity(activity);
-            }
-        }, 3000);
+    @Override
+    protected void onResume() {
+        // Everything is saved in gloabal variables, so there is nothing to reinitialize
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        // There is no ongoing processes that run throughout the activity, so nothing needs to be
+        // stopped or saved for a later resume
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        // Since there is no ongoing processes that make gameplay possible, nothing needs to be
+        // stopped here
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        // No ongoing threads to be stopping here
+        super.onDestroy();
     }
 }

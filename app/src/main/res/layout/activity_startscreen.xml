@@ -5,67 +5,91 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/greenboard"
     android:orientation="vertical"
     tools:context="csci3320.thegallows.StartScreen">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="@string/settings_button"
-        android:id="@+id/settings_button"
-        android:layout_gravity="right"
-        android:layout_weight="0.10"
-        android:background="#00000000"
-        android:textColor="#FFFFFF"
-        android:padding="5sp" />
-
-    <ImageView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_weight=".80"
-        android:id="@+id/SplashImage"
-        android:src="@drawable/splashscreen"
-        android:contentDescription="SplashImage" />
+        android:layout_height="match_parent"
+        android:id="@+id/embedded_container">
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/navigation_buttons"
-        android:layout_weight=".10"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
-        <TableRow
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:id="@+id/settings"
+            android:layout_gravity="top|right">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/settingsMarker"
+                android:background="@drawable/settings_marker" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/settings_button"
+                android:layout_gravity="right"
+                android:adjustViewBounds="false"
+                android:background="@drawable/gear" />
+        </LinearLayout>
+
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            style="?android:attr/buttonBarStyle"
-            android:background="#00000000">
+            android:layout_height="15dp"
+            android:id="@+id/SplashImage"
+            android:contentDescription="SplashImage"
+            android:layout_weight=".4"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp" />
 
-            <Button
-                android:id="@+id/regular_play_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/navigation_buttons"
+            android:layout_weight=".1"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp">
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:text="@string/regular_play_button"
-                android:textColor="#FFFFFF"
-                style="?android:attr/buttonBarButtonStyle"
-                android:background="#00000000"
-                android:clickable="false" />
+                style="?android:attr/buttonBarStyle"
+                android:background="#00000000">
 
-            <Button
-                android:id="@+id/freeplay_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/freeplay_button"
-                android:textColor="#FFFFFF"
-                style="?android:attr/buttonBarButtonStyle"
-                android:background="#00ffffff" />
+                <Button
+                    android:id="@+id/regular_play_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/regular_play_button"
+                    android:textColor="#FFFFFF"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:background="#00000000"
+                    android:clickable="false"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:layout_gravity="left" />
 
-        </TableRow>
-    </TableLayout>
+                <Button
+                    android:id="@+id/freeplay_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/freeplay_button"
+                    android:textColor="#FFFFFF"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:background="#00ffffff"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:layout_gravity="right" />
+
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
 </LinearLayout>

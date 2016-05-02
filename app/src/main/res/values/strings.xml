@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">The Gallows</string>
+    <string name="about">Rules</string>
     <string name="regular_play_button">REGULAR PLAY</string>
-    <string name="freeplay_button">FREE PLAY</string>
+    <string name="freeplay_button">FREEPLAY</string>
     <string name="main_menu_button">MAIN MENU</string>
     <string name="play_again_button">PLAY AGAIN?</string>
     <string name="IV_content_description">Hangman Drawing</string>
-    <string name="settings_temp">[Settings Screen]</string>
-    <string name="settings_button">Settings...</string>
     <string name="startscreen_img_description">Start Screen Image</string>
     <string name="endgame_img_description">Game Result Image</string>
 
@@ -37,19 +36,20 @@
     <string name="Y">Y</string>
     <string name="Z">Z</string>
 
-    <string name="Vowels">Vowels: </string>
     <string name="hintWindowTitle">Hint…</string>
     <string name="HintButton">USE HINT</string>
     <string name="CloseHintButton">Close</string>
 
     <string name="WordUnderline">___</string>
+    <string name="WordUnderline2">__</string>
+    <string name="Space">   </string>
 
     <!-- These are for Preferences -->
     <string-array name="bgColors">
+        <item>Green (Default)</item>
         <item>Black</item>
         <item>Blue</item>
         <item>Cyan</item>
-        <item>Green</item>
         <item>Indigo</item>
         <item>Orange</item>
         <item>Pink</item>
@@ -57,15 +57,14 @@
         <item>Red</item>
         <item>Violet</item>
         <item>Yellow</item>
-        <item>Default</item>
         <item>Random!</item>
     </string-array>
 
     <string-array name="bgColorValues">
+        <item>GREEN</item>
         <item>BLACK</item>
         <item>BLUE</item>
         <item>CYAN</item>
-        <item>GREEN</item>
         <item>INDIGO</item>
         <item>ORANGE</item>
         <item>PINK</item>
@@ -73,18 +72,18 @@
         <item>RED</item>
         <item>VIOLET</item>
         <item>YELLOW</item>
-        <item>DEFAULT</item>
         <item>RANDOM</item>
     </string-array>
 
     <string-array name="fpRound">
-        <item>1 round</item>
+        <item>1 round (Default)</item>
         <item>2 rounds</item>
         <item>3 rounds</item>
         <item>4 rounds</item>
         <item>5 rounds</item>
         <item>10 rounds</item>
         <item>15 rounds</item>
+        <item>20 rounds</item>
     </string-array>
 
     <string-array name="fpRoundValues">
@@ -95,6 +94,7 @@
         <item>5</item>
         <item>10</item>
         <item>15</item>
+        <item>20</item>
     </string-array>
 
 </resources>

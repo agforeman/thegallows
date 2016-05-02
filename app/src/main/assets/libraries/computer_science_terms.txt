@@ -1,0 +1,82 @@
+BIG-O NOTATION
+Big O notation represents the worst-case scenario of an algorithm. Helps you to analyze the scalability and efficiency of algorithms.
+ALGORITHMS
+a procedure or formula for solving a problem. 
+RECURSION
+the repeated application of a recursive procedure or definition.
+BIG DATA
+describes data sets so large and complex that is impossible to manage with conventional data processing tools.
+ARRAY
+a data structure consisting of a collection of elements (values or variables), each identified by at least one array index or key.
+TREE
+a widely used abstract data type (ADT)—or data structure implementing this ADT—that simulates a hierarchical structure, with a root value and subtrees of children with a parent node, represented as a set of linked nodes.
+STACK
+an abstract data type that serves as a collection of elements, with two principal operations: push and pop
+QUEUE
+a particular kind of abstract data type or collection in which the entities in the collection are kept in order and the principal (or only) operations on the collection are the addition of entities to the rear terminal position
+GRAPH
+consists of a finite (and possibly mutable) set of vertices or nodes or points, together with a set of unordered pairs of these vertices
+HASH TABLE
+a data structure used to implement an associative array, a structure that can map keys to values.
+LINKED LIST
+a linear collection of data elements, called nodes pointing to the next node by means of a pointer.
+HEAP
+a specialized tree-based data structure that specifies a particular property
+DYNAMIC PROGRAMMING
+a method for solving a complex problem by breaking it down into a collection of simpler subproblems
+PARALLELISM
+allows 2 or more tasks to run at the same time, provided that the machine has multiprocessing capability.
+DEADLOCK
+a situation in which two or more competing actions are each waiting for the other to finish, and thus neither ever does.
+NOSQL
+Not SQL
+ASSEMBLER
+A program that converts symbolically-coded programs into object level, machine code.
+BINARY
+A file containing one or more strings of data bits which are not printable characters.
+HEXADACIMAL
+A base-16 number
+BUFFER
+A temporary memory for data, normally used to accommodate the difference in the rate at which two devices can handle data during a transfer.
+CARRIAGE RETURN
+The or key on your keyboard. On-line commands often must be followed by.
+DEFG
+Declarative Framework for GPUs
+COMPILER
+A program that translates human-readable programs into a form the computer understands.
+ENCAPSULATION
+Combining or defining a data structure of attributes and a group of associated functions and behaviors as a single object.
+INHERITANCE
+The ability of hierarchically-arranged objects to acquire attributes and behaviors of objects above them without duplicating the code.
+INSTANTIATION
+The act of creating an instance of a class.
+MACHINE LANGUAGE
+A programming language or instruction code that is immediately interpretable by the hardware of the machine concerned.
+MAIN MEMORY
+Usually the fastest storage device of a computer and the one from which instructions are executed.
+MULTIPLEXER
+A device that merges information from multiple input channels to a single output channel.
+OBJECT-ORIENTED
+Supports the concepts of objects, encapsulation, message passing, dynamic binding and inheritance.
+OPERATING SYSTEM
+software that controls the basic, low-level hardware operations, and file management. It is provides the link between the user and the hardware.
+PARAMETER
+A variable, or quantity that can assume any of a given set of values, of which there are two kinds: formal and actual.
+POLYMORPHISM
+A technique for generalizing a single behavior across many kinds of objects.
+RELATIONAL DATABASE
+An organization of data into tables with each column containing the values of a data element and each row representing a record.
+SIMULATION
+An imitation of the behavior of some existing or intended system, or some aspect of that behavior.
+DIJKSTRA
+an early theoretical pioneer in many research areas of computing science, including algorithm design, programming methodology, and software architecture.
+DISTRIBUTED COMPUTING
+a software system in which components located on networked computers communicate and coordinate their actions by passing messages
+AUTOMATA THEORY
+the study of abstract machines, as well as the computational problems that can be solved using them.
+COMBINATORIAL OPTIMIZATION
+a topic that consists of finding an optimal object from a finite set of objects
+COMPUTATIONAL GEOMETRY
+a branch of computer science devoted to the study of algorithms which can be stated in terms of geometry. 
+DIGITAL LOGIC
+Boolean algebra

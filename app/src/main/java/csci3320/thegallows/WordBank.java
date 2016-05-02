@@ -108,24 +108,23 @@ public class WordBank {
      */
     public String getLevelCategoryString(int current_level) {
         switch(current_level) {
-            case 1: return "Animals";
-            case 2: return "Days of the Week";
-            case 3: return "Numbers";
-            case 4: return "Months of the Year";
-            case 5: return "U.S. States";
-            case 6: return "U.S. State Capitals";
-            case 7: return "Photonic Alphabet";
-            case 8: return "U.S. Presidents";
-            case 9: return "Celebrities";/*
-            case 9: return "[level 9 category]";
-            case 10: return "[level 10 category]";
-            case 11: return "[level 11 category]";
-            case 12: return "[level 12 category]";
-            case 13: return "[level 13 category]";
-            case 14: return "[level 14 category]";
-            case 15: return "[level 15 category]";
-            case 16: return "[level 16 category]";
-            case 17: return "[level 17 category]";
+            case 1: return "Days of the Week";
+            case 2: return "Months of the Year";
+            case 3: return "Holidays";
+            case 4: return "Animals";
+            case 5: return "Numbers";
+            case 6: return "U.S. States";
+            case 7: return "U.S. State Capitals";
+            case 8: return "NATO Photonic Alphabet";
+            case 9: return "U.S. Presidents";
+            case 10: return "Computer Science Terms";
+            case 11: return "Celebrities";
+            case 12: return "Countries";
+            case 13: return "Car Companies";
+            case 14: return "World's Richest People";
+            case 15: return "World's Tallest Buildings";
+            case 16: return "Breeds of Dog (Official Names)";
+            case 17: return "World's Tallest Mountains";/*
             case 18: return "[level 18 category]";
             case 19: return "[level 19 category]";
             case 20: return "[level 20 category]";
@@ -167,28 +166,27 @@ public class WordBank {
         if (_level == 0) {
             Random level_randomizer = new Random();
 
-            _level = level_randomizer.nextInt(9) + 1;
+            _level = level_randomizer.nextInt(17) + 1;
         }
 
         switch (_level) {
-            case 1: return "libraries/animals.txt";
-            case 2: return "libraries/days.txt";
-            case 3: return "libraries/numbers.txt";
-            case 4: return "libraries/months.txt";
-            case 5: return "libraries/us_states.txt";
-            case 6: return "libraries/us_state_capitals.txt";
-            case 7: return "libraries/nato_photonetic_alphabet.txt";
-            case 8: return "libraries/us_presidents.txt";
-            case 9: return "libraries/celebrities.txt";/*
-            case 9: return "level9.txt";
-            case 10: return "level10.txt";
-            case 11: return "level11.txt";
-            case 12: return "level12.txt";
-            case 13: return "level13.txt";
-            case 14: return "level14.txt";
-            case 15: return "level15.txt";
-            case 16: return "level16.txt";
-            case 17: return "level17.txt";
+            case 1: return "libraries/days.txt";
+            case 2: return "libraries/months.txt";
+            case 3: return "libraries/holidays.txt";
+            case 4: return "libraries/animals.txt";
+            case 5: return "libraries/numbers.txt";
+            case 6: return "libraries/us_states.txt";
+            case 7: return "libraries/us_state_capitals.txt";
+            case 8: return "libraries/nato_photonetic_alphabet.txt";
+            case 9: return "libraries/us_presidents.txt";
+            case 10: return "libraries/computer_science_terms.txt";
+            case 11: return "libraries/celebrities.txt";
+            case 12: return "libraries/countries.txt";
+            case 13: return "libraries/car_companies.txt";
+            case 14: return "libraries/richest_people.txt";
+            case 15: return "libraries/tallest_buildings.txt";
+            case 16: return "libraries/full_dogbreeds.txt";
+            case 17: return "libraries/mountains.txt";/*
             case 18: return "level18.txt";
             case 19: return "level19.txt";
             case 20: return "level20.txt";

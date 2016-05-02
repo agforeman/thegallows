@@ -4,10 +4,10 @@
         <ListPreference android:title="Background Color"
             android:key="BackgroundColor" android:summary="Choose the Color of the Chalkboard"
             android:entries="@array/bgColors" android:entryValues="@array/bgColorValues"
-            android:defaultValue="DEFAULT"/>
-        <ListPreference android:title="Free Play Rounds"
-            android:key="FreePlayRounds"
-            android:summary="Choose the Number of Rounds to Play during Free Play"
+            android:defaultValue="GREEN"/>
+        <ListPreference android:title="Freeplay Rounds"
+            android:key="FreeplayRounds"
+            android:summary="Choose the Number of Rounds to Play during Freeplay"
             android:entries="@array/fpRound" android:entryValues="@array/fpRoundValues"
             android:defaultValue="1"/>
     </PreferenceCategory>
