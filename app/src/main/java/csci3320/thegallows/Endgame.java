@@ -84,6 +84,8 @@ public class Endgame extends Activity {
                     replayIntent.putExtra("LIFE", 3);
                     replayIntent.putExtra("HINTS", 3);
                     replayIntent.putExtra("WIN", true);
+                    replayIntent.putExtra("LIFE_WARNING", false);
+                    replayIntent.putExtra("REWARD", false);
                 }
                 launchActivity(replayIntent);
             }

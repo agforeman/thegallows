@@ -192,6 +192,8 @@ public class Gameplay extends Activity implements OnClickListener {
      */
     public TextView toast_text;
 
+    private boolean reward_recieved = false;
+
     private boolean isFreeplay() { return GAMETYPE.equals("FREEPLAY"); }
 
     private boolean isValidLetter(char selection) { return WORD.indexOf(selection) >= 0; }
@@ -204,6 +206,11 @@ public class Gameplay extends Activity implements OnClickListener {
         lifes = getIntent().getIntExtra("LIFE", -1);
         hints = getIntent().getIntExtra("HINTS", -1);
         warningShowed = getIntent().getBooleanExtra("LIFE_WARNING", false);
+        reward_recieved = getIntent().getBooleanExtra("REWARD", false);
+
+        if ((LEVEL_NUM == 11 || LEVEL_NUM == 16) && reward_recieved)
+            reward_recieved = false;
+
 
         if (isFreeplay()) {
             FP_MAX = getIntent().getIntExtra("FP_MAX", -1);
@@ -348,12 +355,13 @@ public class Gameplay extends Activity implements OnClickListener {
                 if (win)
                     launchActivity(false);
                 else {
-                    if (lifes != 0)
-                        launchActivity(true);
-                    else {
+                    if (lifes != 0) {
                         lifes--;
-                        launchActivity(false);
+                        launchActivity(true);
                     }
+                    else
+                        launchActivity(false);
+
                 }
             }
         }
@@ -398,6 +406,7 @@ public class Gameplay extends Activity implements OnClickListener {
         CYCLIC_INTENT.putExtra("LIFE", lifes);
         CYCLIC_INTENT.putExtra("HINTS", hints);
         CYCLIC_INTENT.putExtra("LIFE_WARNING", warningShowed);
+        CYCLIC_INTENT.putExtra("REWARD", reward_recieved);
 
         if (isFreeplay()) {
             CYCLIC_INTENT.putExtra("FP_MAX", FP_MAX);
@@ -452,8 +461,12 @@ public class Gameplay extends Activity implements OnClickListener {
 
         if (win)
             toast_text.setTextColor(Color.GREEN);
-        else
-            toast_text.setTextColor(Color.RED);
+        else {
+            if (!text.equals("Level " + LEVEL_NUM + " reached, Congrats!"))
+                toast_text.setTextColor(Color.RED);
+            else
+                toast_text.setTextColor(Color.GREEN);
+        }
 
         toast.setGravity(Gravity.CENTER_VERTICAL, 25, -275);
         toast.setDuration(Toast.LENGTH_SHORT);
@@ -635,11 +648,12 @@ public class Gameplay extends Activity implements OnClickListener {
         LifesText.setTypeface(chalkTypeFace);
         HintsText.setTypeface(chalkTypeFace);
 
-        if ((LEVEL_NUM == 10 || LEVEL_NUM == 15) && !isFreeplay()) {
+        if ((LEVEL_NUM == 10 || LEVEL_NUM == 15) && !reward_recieved && !isFreeplay()) {
             lifes += 2;
             hints += 2;
+            reward_recieved = true;
 
-            Toast.makeText(getApplicationContext(), "+2 LIVES", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "+2 LIFES", Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), "+2 HINTS", Toast.LENGTH_SHORT).show();
             showToast("Level " + LEVEL_NUM + " reached, Congrats!");
         }
@@ -750,8 +764,10 @@ public class Gameplay extends Activity implements OnClickListener {
                 else {
                     if (WORD.length() < 13)
                         view.setText(R.string.WordUnderline);
-                    else
+                    else if (WORD.length() >= 13 && WORD.length() < 16)
                         view.setText(R.string.WordUnderline2);
+                    else if (WORD.length() >= 16)
+                        view.setText(R.string.WordUnderline3);
 
                     if (!Character.isLetter(WORD.charAt(j)))
                         view.setTextColor(Color.TRANSPARENT);

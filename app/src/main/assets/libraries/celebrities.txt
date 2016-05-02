@@ -1,7 +1,7 @@
 RITA ORA
 British singer and actress. Her debut studio album, Ora, released in 2012, debuted at number one in the United Kingdom.
 JUSTIN BIEBER
-Canadian singer and songwriter. After a talent manager discovered him through his YouTube videos covering songs in 2007 and signed to RBMG, Bieber released his debut EP, My World, in late 2009.
+Canadian singer and songwriter. He released his debut EP, My World, in late 2009.
 ROB KARDASHIAN
 American television personality and businessman. He is best known for featuring on Keeping Up with the Kardashians.
 ZAYN MALIK
@@ -9,27 +9,27 @@ English singer and songwriter. In 2010, auditioned as a solo artist for the Brit
 KANYE WEST
 American hip hop recording artist, songwriter, record producer, fashion designer, and entrepreneur.
 KENDALL JENNER
-American fashion model and television personality. First came to public attention for appearing in the E! reality television show Keeping Up with the Kardashians.
+American fashion model and television personality. Appearing in the E! reality television show Keeping Up with the Kardashians.
 KHLOE KARDASHIAN
-American entrepreneur and television personality. Since 2007, she and her family have starred in the reality television series Keeping Up with the Kardashians.
+American entrepreneur and television personality. Appears in the reality television series Keeping Up with the Kardashians.
 MICHAEL JACKSON
 Michael Joseph Jackson was an American singer, songwriter, record producer, dancer, and actor. Called the King of Pop.
 TYRA BANKS
 American model, television personality, talk show host, producer, author, actress, singer and business woman.
 ELLIE GOULDING
-English singer, songwriter and multi-instrumentalist. Her career began when she met record producers Starsmith and Frankmusik, and she was later spotted by Jamie Lillywhite, who later became her manager and A&R.
+English singer, songwriter and multi-instrumentalist. Her career began when she met record producers Starsmith and Frankmusik.
 JAMIE FOXX
 Eric Marlon Bishop, known professionally by this stage name, is an American actor, singer, songwriter and comedian.
 OPRAH WINFREY
 American media proprietor, talk show host, actress, producer, and philanthropist.
 KYLIE JENNER
-American reality television personality, socialite and model. Born and raised in Los Angeles, California, she is best known for appearing on the E! reality television series Keeping Up with the Kardashians.
+American reality television personality, socialite and model. Appears on the E! reality television series Keeping Up with the Kardashians.
 KATE HUDSON
-American actress. She rose to prominence in 2000 for playing Penny Lane in Almost Famous, for which she won a Golden Globe and was nominated for an Academy Award for Best Supporting Actress.
+American actress. She rose to prominence in 2000 for playing Penny Lane in Almost Famous.
 SOFIA VERGARA
 Colombian-born American actress, comedian, producer, television host, model and businesswoman.
 MARIAH CAREY
-American singer, songwriter, record producer, and actress. She rose to prominence after the release of the first single taken from her eponymous debut album in 1990, "Vision of Love".
+American singer, songwriter, record producer, and actress.
 SNOOKI
 Chilean-American reality television personality and dancer who is best known for being a cast member of the MTV reality show Jersey Shore.
 EMINEM
@@ -45,7 +45,7 @@ Spanish actress and model. Signed by an agent at age 15, she made her acting deb
 JOHN KRASINSKI
 American actor, director, producer and screenwriter. He is known for his role as Jim Halpert on the NBC sitcom The Office.
 STEVEN TYLER
-American singer-songwriter, multi-instrumentalist, and former television music competition judge, best known as the lead singer of the Boston-based rock band Aerosmith.
+American singer-songwriter, multi-instrumentalist, and best known as the lead singer of the Boston-based rock band Aerosmith.
 AVRIL LAVIGNE
 Canadian singer-songwriter and actress. She was born in Belleville, Ontario, and spent most of her youth in the town of Greater Napanee.
 RYAN CABRERA
@@ -57,13 +57,13 @@ Australian actor. He played the role of Josh Taylor in the soap opera Neighbours
 TYGA
 Micheal Ray Stevenson is an American rapper from Gardena, California. In 2011, signed a recording contract with Young Money Entertainment, Cash Money Records and Republic Records.
 DENISE RICHARDS
-American actress and a former fashion model. She has appeared in numerous films, including Starship Troopers, Wild Things, Drop Dead Gorgeous, The World Is Not Enough as a Bond girl, and in Valentine.
+American actress and a former fashion model. She has appeared in numerous films.
 MILEY CYRUS
 American singer, songwriter, and actress. Born and raised in Franklin, Tennessee, she held minor roles in the television series Doc and the film Big Fish in her childhood.
 CHRIS ROCK
 American actor, comedian, voice artist, director, writer, and producer.
 HARRY STYLES
-English singer and songwriter, known as a member of the boy band One Direction. He made his debut as a singer with his band White Eskimo, who performed locally in Holmes Chapel, Cheshire
+English singer and songwriter, known as a member of the boy band One Direction.
 GWYNETH PALTROW
 American actress, singer, and food writer. She gained early notice for her work in films such as the thriller Seven and the period drama Emma.
 CHARLIE SHEEN
@@ -77,7 +77,7 @@ American actress. Born into a film-oriented family, began her acting career in 1
 KRIS JENNER
 American television personality who rose to fame for starring in the reality television series Keeping Up with the Kardashians together with her family.
 EMMA WATSON
-British actress, model, and activist. Born in Paris and brought up in Oxfordshire, Watson attended the Dragon School as a child and trained as an actress at the Oxford branch of Stagecoach Theatre Arts.
+British actress, model, and activist. Played a big roll in Harry Potter.
 MICHELLE WILLIAMS
 American actress. She began her career with television guest appearances, and made her feature film debut in Lassie, which earned her a Youth in Film nomination.
 OLIVIA MUNN
@@ -101,7 +101,7 @@ American singer-songwriter. Raised in Wyomissing, Pennsylvania, she moved to Nas
 GEORGE CLOONEY
 American actor, filmmaker and activist. He has received three Golden Globe Awards for his work as an actor and two Academy Awards, one for acting and the other for producing.
 JARED LETO
-American actor, singer-songwriter, and director. After starting his career with television appearances in the early 1990s, Leto achieved recognition for his role as Jordan Catalano on the television series My So-Called Life
+American actor, singer-songwriter, and director. After starting his career with television appearances in the early 1990s.
 WILL ARNETT
 Canadian actor. He played George Oscar Bluth II in the Fox series Arrested Development and Devon Banks in the NBC series 30 Rock, for which he earned a combined five Emmy Award nominations
 JENNIFER ANISTON
@@ -115,4 +115,4 @@ American actor and filmmaker. Born and raised in Cambridge, Massachusetts
 JESSICA ALBA
 American actress, model and businesswoman. She has won various awards for her acting, including the Choice Actress Teen Choice Award and Saturn Award for Best Actres
 MARISA TOMEI
-American actress. In a career spanning three decades, she had initial success in films as a young actress, followed by a series of unsuccessful films, then a resurgence with a series of critically acclaimed films
+American actress. In a career spanning three decades, she had initial success in films as a young actress.

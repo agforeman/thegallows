@@ -91,6 +91,7 @@ public class StartScreen extends Activity {
                 launchIntent.putExtra("WIN", true);
                 launchIntent.putExtra("PREVIOUS_BG", 0);
                 launchIntent.putExtra("LIFE_WARNING", false);
+                launchIntent.putExtra("REWARD", false);
                 launchActivity(launchIntent, "REGULAR PLAY SELECTED");
             }
         });
