@@ -104,22 +104,23 @@
     </ScrollView>
 
     <HorizontalScrollView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:id="@+id/HangmanAreaContainer"
         android:layout_weight="3"
         android:background="@android:color/transparent"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="25dp">
+        android:layout_gravity="center">
 
         <ImageView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/hangman_area"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/IV_content_description" />
+            android:contentDescription="@string/IV_content_description"
+            android:foregroundGravity="center_vertical|center|center_horizontal" />
     </HorizontalScrollView>
 
     <ScrollView
