@@ -11,21 +11,21 @@
         android:theme="@android:style/Theme.Black.NoTitleBar">
 
         <activity android:name="csci3320.thegallows.Gameplay"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"/>
+                  android:launchMode="singleTask" />
+                 <!-- android:screenOrientation="portrait" -->
 
         <activity android:name="csci3320.thegallows.StartScreen"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait">
-            <intent-filter>
+                  android:launchMode="singleTask">
+                <!-- android:screenOrientation="portrait" -->
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity android:name="csci3320.thegallows.Endgame"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"/>
+                  android:launchMode="singleTask"/>
+                <!-- android:screenOrientation="portrait" -->
 
         <activity android:name="csci3320.thegallows.Settings"/>
     </application>

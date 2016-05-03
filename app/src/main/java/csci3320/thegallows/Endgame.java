@@ -1,8 +1,6 @@
 package csci3320.thegallows;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.content.Intent;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -21,15 +18,14 @@ public class Endgame extends Activity {
 
     private Button buttonPlayAgain = null;
     private Button buttonMainMenu = null;
-    private ImageButton buttonSettings = null;
-    private Intent settingsIntent = null;
     private LinearLayout thisLayout = null;
-    //private LinearLayout navigation_buttons = null;
     private ImageView resultImage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if(getResources().getBoolean(R.bool.portrait_only))
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_endgame);
 

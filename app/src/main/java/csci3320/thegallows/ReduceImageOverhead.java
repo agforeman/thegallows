@@ -1,5 +1,7 @@
 package csci3320.thegallows;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -42,4 +44,10 @@ public class ReduceImageOverhead {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
+/*
+    // This method has been included to set the orientation for larger devices to landscape so the images size correctly
+    public static boolean isScreenLarge(Context context) { // http://stackoverflow.com/a/10491982
+        final int screenSize = context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+        return screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE || screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE;
+    }*/
 }
