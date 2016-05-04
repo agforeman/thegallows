@@ -1,6 +1,8 @@
 package csci3320.thegallows;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -22,33 +24,41 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class StartScreen extends Activity {
+    public SharedPreferences prefs = null;
     private Typeface chalkTypeFace;
-
     private Button buttonRegularPlay = null;
     private Button buttonFreeplay = null;
     private ImageButton buttonSettings = null;
     private Intent launchIntent = null;
     private Intent settingsIntent = null;
-    LinearLayout thisLayout = null;
-    private LinearLayout navigation_buttons = null;
+    private LinearLayout thisLayout = null;
     private ImageView logo = null;
+    private Toast main_toast = null;
+    private Toast selection_toast = null;
+    private Runnable back_runnable = null;
+    private Handler back_handler = null;
+    private int START_DELAY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(getResources().getBoolean(R.bool.portrait_only))
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        /* be sure that the screen will remain in portrait mode even when the device's orientation
+         * is physically adjusted. Although this was also specified in the Manifest file, we need to
+         * be extra sure that this activity will remain in portrait mode or else the game will reset
+         */ setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startscreen);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (!prefs.getBoolean("EnableAnimations", false) && getIntent().getBooleanExtra("firstrun", true))
+            Toast.makeText(StartScreen.this, "Animations Disabled.", Toast.LENGTH_LONG).show();
 
         chalkTypeFace = Typeface.createFromAsset(getAssets(), "fonts/squeakychalksound.ttf");
 
         thisLayout = (LinearLayout) findViewById(R.id.view_layout);
         thisLayout.setBackgroundResource(R.drawable.startboard);
-        navigation_buttons = (LinearLayout) findViewById(R.id.navigation_buttons);
 
         logo = (ImageView) findViewById(R.id.SplashImage);
 
@@ -56,24 +66,12 @@ public class StartScreen extends Activity {
 
         logo.setImageBitmap(ReduceImageOverhead.decodeSampledBitmapFromResource(getResources(), R.drawable.splashscreen, 500, 500));
 
-        new Handler().postAtFrontOfQueue(new Runnable() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        logo.startAnimation(AnimationUtils.loadAnimation(StartScreen.this, R.anim.rotate3));
-                    }
-                });
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        buttonSettings.startAnimation(AnimationUtils.loadAnimation(StartScreen.this, R.anim.rotate1));
-                    }
-                });
-            }
-        });
+        if (prefs.getBoolean("EnableAnimations", true)) {
+            animate(true);
+            START_DELAY = 4000;
+        }
+        else
+        START_DELAY = 1000;
 
         // Get an intent to launch the game
         launchIntent = new Intent(this, Gameplay.class);
@@ -124,16 +122,6 @@ public class StartScreen extends Activity {
         });
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-
-        buttonFreeplay.setBackgroundColor(0x00000000);
-        buttonFreeplay.setTextColor(Color.WHITE);
-        buttonRegularPlay.setBackgroundColor(0x00000000);
-        buttonRegularPlay.setTextColor(Color.WHITE);
-    }
-
     private void buildButtons() {
         // Get the two buttons
         buttonRegularPlay = (Button) findViewById(R.id.regular_play_button);
@@ -148,19 +136,27 @@ public class StartScreen extends Activity {
     private void launchActivity(final Intent activity, String toast_text) {
         buttonFreeplay.setTextColor(Color.TRANSPARENT);
         buttonRegularPlay.setTextColor(Color.TRANSPARENT);
-        navigation_buttons.setBackgroundColor(Color.TRANSPARENT);
-        Toast.makeText(this, toast_text, Toast.LENGTH_SHORT).show();
-        makeToast("GOOD LUCK!").show();
+        selection_toast = Toast.makeText(this, toast_text, Toast.LENGTH_SHORT);
+        main_toast = makeToast("GOOD LUCK!");
+        if (prefs.getBoolean("EnableAnimations", true))
+            selection_toast.show();
+        main_toast.show();
 
-        new Handler().postDelayed(new Runnable() {
+
+        back_handler = new Handler();
+        back_runnable = new Runnable() {
             @Override
             public void run() {
                 activity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 StartScreen.this.finish();
                 startActivity(activity);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                if (prefs.getBoolean("EnableAnimations", true))
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
-        }, 4000);
+        };
+
+        back_handler.postDelayed(back_runnable, START_DELAY);
     }
 
     private Toast makeToast(String text) {
@@ -179,5 +175,62 @@ public class StartScreen extends Activity {
         toast.setView(toast_layout);
 
         return toast;
+    }
+
+    private void animate(boolean on) {
+        if (on) {
+            new Handler().postAtFrontOfQueue(new Runnable() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            logo.startAnimation(AnimationUtils.loadAnimation(StartScreen.this, R.anim.rotate3));
+                        }
+                    });
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            buttonSettings.startAnimation(AnimationUtils.loadAnimation(StartScreen.this, R.anim.rotate1));
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            buttonSettings.clearAnimation();
+            logo.clearAnimation();
+        }
+    }
+
+    // Handle back button presses manually here
+    @Override
+    public void onBackPressed(){
+        if (back_runnable != null) {
+            back_handler.removeCallbacks(back_runnable);
+            if (prefs.getBoolean("EnableAnimations", true))
+                selection_toast.cancel();
+            main_toast.cancel();
+            buttonFreeplay.setTextColor(Color.WHITE);
+            buttonRegularPlay.setTextColor(Color.WHITE);
+            buttonFreeplay.setClickable(true);
+            buttonRegularPlay.setClickable(true);
+            buttonSettings.setClickable(true);
+            back_runnable = null;
+            back_handler = null;
+            makeToast("Game launch canceled");
+        }
+        else {
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Exit App?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            System.exit(0);
+                        }
+                    }).create().show();
+        }
     }
 }

@@ -1,6 +1,9 @@
 package csci3320.thegallows;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -16,20 +19,27 @@ import android.widget.LinearLayout;
 
 public class Endgame extends Activity {
 
+    SharedPreferences prefs = null;
+    Intent replayIntent = null;
     private Button buttonPlayAgain = null;
     private Button buttonMainMenu = null;
     private LinearLayout thisLayout = null;
     private ImageView resultImage = null;
+    private String game_type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(getResources().getBoolean(R.bool.portrait_only))
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        /* be sure that the screen will remain in portrait mode even when the device's orientation
+         * is physically adjusted. Although this was also specified in the Manifest file, we need to
+         * be extra sure that this activity will remain in portrait mode or else the game will reset
+         */
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_endgame);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         thisLayout = (LinearLayout) findViewById(R.id.view_layout2);
         thisLayout.setBackgroundResource(R.drawable.defaultboard);
@@ -47,42 +57,24 @@ public class Endgame extends Activity {
                     R.drawable.loseimage, 500, 500));
         }
 
-        new Handler().postAtFrontOfQueue(new Runnable() {
-            @Override
-            public void run() {
-                resultImage.startAnimation(AnimationUtils.loadAnimation(Endgame.this, R.anim.rotate3));
-            }
-        });
+        if (prefs.getBoolean("EnableAnimations", true)) {
+            new Handler().postAtFrontOfQueue(new Runnable() {
+                @Override
+                public void run() {
+                    resultImage.startAnimation(AnimationUtils.loadAnimation(Endgame.this, R.anim.rotate3));
+                }
+            });
+        }
 
         // Get info from the incoming intent
-        final String game_type = getIntent().getStringExtra("GameType");
+        game_type = getIntent().getStringExtra("GameType");
 
         // Set Play Again button logic
         buttonPlayAgain.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {/*
-                buttonMainMenu.setBackgroundResource(R.drawable.erasermark);
-                buttonMainMenu.setTextColor(0x00000000);
-                buttonSettings.setBackgroundResource(R.drawable.erasermark);*/
-                Intent replayIntent = new Intent(Endgame.this, Gameplay.class);
+            public void onClick(View v) {
+                replayIntent = new Intent(Endgame.this, Gameplay.class);
                 replayIntent.putExtra("GameType", game_type);
-
-                if (game_type.equals("FREEPLAY")) {
-                    replayIntent.putExtra("GameType", "FREEPLAY");
-                    replayIntent.putExtra("LEVEL", 0);
-                    replayIntent.putExtra("FP_MAX", getIntent().getIntExtra("FP_MAX", -1));
-                    replayIntent.putExtra("LIFE", 0);
-                    replayIntent.putExtra("HINTS", 0);
-                    replayIntent.putExtra("WIN", true);
-                }
-                else if (game_type.equals("REGULAR")) {
-                    replayIntent.putExtra("LEVEL", 1);
-                    replayIntent.putExtra("LIFE", 3);
-                    replayIntent.putExtra("HINTS", 3);
-                    replayIntent.putExtra("WIN", true);
-                    replayIntent.putExtra("LIFE_WARNING", false);
-                    replayIntent.putExtra("REWARD", false);
-                }
                 launchActivity(replayIntent);
             }
         });
@@ -90,30 +82,19 @@ public class Endgame extends Activity {
         // Set the Main Menu button logic
         buttonMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {/*
-                buttonPlayAgain.setBackgroundResource(R.drawable.erasermark);
-                buttonPlayAgain.setTextColor(0x00000000);
-                buttonSettings.setBackgroundResource(R.drawable.erasermark);*/
+            public void onClick(View v) {
                 Intent mainMenuIntent = new Intent(Endgame.this, StartScreen.class);
+                mainMenuIntent.putExtra("firstrun", false);
                 mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 launchActivity(mainMenuIntent);
             }
         });
-/*
-        settingsIntent = new Intent(this, Settings.class);
-        buttonSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchActivity(settingsIntent);
-            }
-        });*/
     }
 
     @Override
     protected void onResume(){
         super.onResume();
 
-       // buttonSettings.setBackgroundColor(0x00000000);
         buttonMainMenu.setBackgroundColor(0x00000000);
         buttonPlayAgain.setBackgroundColor(0x00000000);
         buttonPlayAgain.setTextColor(Color.WHITE);
@@ -123,11 +104,16 @@ public class Endgame extends Activity {
     // Handle back button presses manually here
     @Override
     public void onBackPressed(){
-        Intent mainMenuIntent = new Intent(Endgame.this, StartScreen.class);
-        mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        Endgame.this.finish();
-        startActivity(mainMenuIntent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Replay in " + game_type + " mode?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(Endgame.this, Gameplay.class);
+                        launchActivity(i);
+                    }
+                }).create().show();
     }
 
     private void buildButtons() {
@@ -149,11 +135,28 @@ public class Endgame extends Activity {
         buttonPlayAgain.setTextColor(Color.TRANSPARENT);
         buttonPlayAgain.setClickable(false);
 
+        if (game_type.equals("FREEPLAY")) {
+            activity.putExtra("GameType", "FREEPLAY");
+            activity.putExtra("LEVEL", 0);
+            activity.putExtra("FP_MAX", getIntent().getIntExtra("FP_MAX", -1));
+            activity.putExtra("LIFE", 0);
+            activity.putExtra("HINTS", 0);
+            activity.putExtra("WIN", true);
+        }
+        else if (game_type.equals("REGULAR")) {
+            activity.putExtra("LEVEL", 1);
+            activity.putExtra("LIFE", 3);
+            activity.putExtra("HINTS", 3);
+            activity.putExtra("WIN", true);
+            activity.putExtra("LIFE_WARNING", false);
+            activity.putExtra("REWARD", false);
+        }
+
         activity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Endgame.this.finish();
         startActivity(activity);
+
+            if (prefs.getBoolean("EnableAnimations", true))
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
-
-
 }

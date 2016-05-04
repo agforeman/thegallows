@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Preferences">
+    <PreferenceCategory android:title="Preferences for The Gallows">
         <ListPreference android:title="Background Color"
-            android:key="BackgroundColor" android:summary="Choose the Color of the Chalkboard"
+            android:key="BackgroundColor" android:summary="Choose the Color of the Gameplay chalkboard"
             android:entries="@array/bgColors" android:entryValues="@array/bgColorValues"
             android:defaultValue="GREEN"/>
         <ListPreference android:title="Freeplay Rounds"
@@ -10,5 +10,10 @@
             android:summary="Choose the Number of Rounds to Play during Freeplay"
             android:entries="@array/fpRound" android:entryValues="@array/fpRoundValues"
             android:defaultValue="1"/>
+        <CheckBoxPreference
+            android:title="Play With Animations"
+            android:summary="@string/animation_pref_note"
+            android:key="EnableAnimations" android:enabled="true"
+            android:defaultValue="true"/>
     </PreferenceCategory>
 </PreferenceScreen>

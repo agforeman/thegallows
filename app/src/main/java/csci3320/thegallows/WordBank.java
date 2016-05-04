@@ -1,7 +1,6 @@
 package csci3320.thegallows;
 
 import android.content.Context;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -9,17 +8,37 @@ import java.util.Random;
 
 
 /**
- * The WordBank class defines the "WordBank" object.
- * "WordBank" objects contain the getGameWord() method, which returns a word for Hangman gameplay.
+ * The WordBank class defines the "WordBank" object. "WordBank" objects contain the getGameWord() method,
+ * which returns a specific word for Hangman gameplay based on a level number received or a random
+ * word from the range of implemented libraries if the input is 0.
+ *
+ * Recursive Gameplay sequences constantly need access to the WordBank class in order to generate a
+ * WORD for the current stage of the game within that sequence. When a recursive sequence requests
+ * a word from WordBank by calling its getGameWord() method, the WordBank determines, based on the input,
+ * a file to load into a BufferedReader. The nextLine method of the resulting BufferedReader object
+ * iterates through the file. A random number generator is used to specify to which odd numbered line
+ * WordBank should iterate to. The resulting odd numbered line of the BufferedReader object is saved
+ * into a String and this String is returned by getGameWord as the WORD used in Hangman gameplay.
+ *
+ * A recursive sequence from the Gameplay activity will most likely request a HINT immediately following
+ * the request for a WORD. Since the WordBank object created by the Gameplay sequence is fully instantiated
+ * during the fulfillment of the request for a WORD, a HINT can be retrieved that corresponds to the WORD
+ * just returned.
+ *
+ * It is very important to programmatically set conditions in the Gameplay class that does not allow
+ * getGameHint to be called before getGameWord. This would most likely result in an application crash
+ * since the lack of instantiation in getGameHint allows a garbage value to searched for in a library
+ * file. Since users do not use this class on the surface, it is not important to allow a HINT to be
+ * returned before a WORD, nor does it make sense given the current implementation. However, it is
+ * important for the programmers to note this usage requirement.
  *
  * @author  Justin Shapiro
  * @version 3.0
  * @since   2016-04-10
- *
  */
 public class WordBank {
     /**
-     * The application context needs to be defined explicitly since WordBank does not extend Activity
+     * The application context needs to be defined explicitly since WordBank does not extend Activity.
      */
     Context _appContext;
     /**
@@ -31,7 +50,7 @@ public class WordBank {
      */
     public String game_word = "";
     /**
-     * Stores the hint associated with the game_word in a String object
+     * Stores the hint associated with the game_word in a String object.
      */
     public String game_hint = "";
     /**
@@ -42,39 +61,39 @@ public class WordBank {
 
     /**
      * This is the main constructor for WordBank.
-     * @param appContext Needed to access the files stored in the assets folder outside of an activity
-     * @param level The current level of the game
+     * @param appContext Needed to access the files stored in the assets folder outside of an activity.
+     * @param level The current level of the game.
      */
     public WordBank(Context appContext, int level) {
         _appContext = appContext;
         _level = level;
     }
     /**
-     * Method that reads from game_word_buff and stores a random line from the corresponding file
+     * Method that reads from game_word_buff and stores a random line from the corresponding file.
      * in a String object.
-     * @return The word used for Hangman gameplay
+     * @return The word used for Hangman gameplay.
      */
     public String getGameWord() {
-        // Link the BufferReader object "game_word_buff" to the selected library file
+        // link the BufferReader object "game_word_buff" to the selected library file
         initFileBuffer(getFile());
 
-        // Create a random number generator for
+        // create a random number generator for
         // random line selection from the selected library file
         Random location_randomizer = new Random();
 
-        // Produce a random int in the range [0, getFileLength(getFile(_difficulty))]
+        // produce a random int in the range [0, getFileLength(getFile(_difficulty))]
         int game_word_location = location_randomizer.nextInt(
                                  getNumWords(getFile()));
 
         int counter = 0; // loop counter used to keep track of line number relative to random int
         try {
             while (counter != game_word_location + 1) {
-                // Line number counter in the BufferReader object
+                // line number counter in the BufferReader object
                 // increments with each loop iteration
                 game_word_buff.mark(getNumWords(getFile()));
                 game_word_buff.readLine();
 
-                // When the line number counter in BufferedReader object equals the loop counter,
+                // when the line number counter in BufferedReader object equals the loop counter,
                 // store the current line in the primary gameplay String object and exit loop
                 if (counter == game_word_location) {
                     game_word_buff.reset();
@@ -83,13 +102,13 @@ public class WordBank {
                     break;
                 }
 
-                // Increment the line position in the buffer again to skip hint
+                // increment the line position in the buffer again to skip hint
                 game_word_buff.readLine();
 
                 counter++;
             }
 
-            // The buffer should be closed when it is done being used
+            // the buffer should be closed when it is done being used
             game_word_buff.close();
 
         } catch (IOException e) { e.printStackTrace(); }
@@ -98,13 +117,14 @@ public class WordBank {
     }
     /**
      * Method that returns the String that contains the hint for the currently selected word.
-     * In order for this method to return the correct value, it MUST be called AFTER getGameWord()
-     * @return The hint used for Hangman gameplay
+     * In order for this method to return the correct value, it MUST be called AFTER getGameWord().
+     * @return The hint used for Hangman gameplay.
      */
     public String getGameHint() { return game_hint; }
     /**
-     * Method that returns the topic of the current_level for use in Gameplay
-     * @param current_level The current level that the Gameplay activity is currently on
+     * Method that returns the topic of the current_level for use in Gameplay.
+     * @param current_level The current level that the Gameplay activity is currently on.
+     * @return A String containing the category associated with a level.
      */
     public String getLevelCategoryString(int current_level) {
         switch(current_level) {
@@ -124,45 +144,36 @@ public class WordBank {
             case 14: return "World's Richest People";
             case 15: return "World's Tallest Buildings";
             case 16: return "Breeds of Dog (Official Names)";
-            case 17: return "World's Tallest Mountains";/*
-            case 18: return "[level 18 category]";
-            case 19: return "[level 19 category]";
-            case 20: return "[level 20 category]";
-            case 21: return "[level 21 category]";
-            case 22: return "[level 22 category]";
-            case 23: return "[level 23 category]";
-            case 24: return "[level 24 category]";
-            case 25: return "[level 25 category]";
-            case 26: return "[level 26 category]";
-            case 27: return "[level 27 category]";
-            case 28: return "[level 28 category]";
-            case 29: return "[level 29 category]";
-            case 30: return "[level 30 category]";
-*/
+            case 17: return "World's Tallest Mountains";
+
             // The below line shouldn't ever be accessed, but a default case is required
             default:         return "internal_error";
         }
     }
     /**
-     * Method returns a String in the form of "Level #" for use in Gameplay
+     * Method returns a String in the form of "Level #" for use in Gameplay.
+     * @return A formatted string in the form of "Level #".
      */
     public String getLevelString() { return "Level " + Integer.toString(_level); }
     /**
-     * Method that links the selected library file to a BufferedReader with an InputStreamReader
-     * that is initialized with a FileInputStream of the file
-     * @param file_path The location of the file to link to the buffer, stored in a String object
+     * Method that links the selected library file to a BufferedReader with an InputStreamReader.
+     * that is initialized with a FileInputStream of the file.
+     * @param file_path The location of the file to link to the buffer, stored in a String object.
      */
     public void initFileBuffer(String file_path) {
         try {
+            // fill the buffer with the return value of the InputStreamReader
             game_word_buff = new BufferedReader(new InputStreamReader(
                              _appContext.getAssets().open(file_path)));
         } catch (IOException e) { e.printStackTrace(); }
     }
     /**
-     * Method that returns the path of the library file based on the constructor argument
-     * @return The path of the library file to select a gameplay word from
+     * Method that returns the path of the library file based on the constructor argument.
+     * @return The path of the library file to select a gameplay word from.
      */
     public String getFile() {
+        // if _level == 0, this class is being used to return a WORD for a Freeplay sequence and
+        // therefore a _level number will be returned randomly.
         if (_level == 0) {
             Random level_randomizer = new Random();
 
@@ -186,21 +197,8 @@ public class WordBank {
             case 14: return "libraries/richest_people.txt";
             case 15: return "libraries/tallest_buildings.txt";
             case 16: return "libraries/full_dogbreeds.txt";
-            case 17: return "libraries/mountains.txt";/*
-            case 18: return "level18.txt";
-            case 19: return "level19.txt";
-            case 20: return "level20.txt";
-            case 21: return "level21.txt";
-            case 22: return "level22.txt";
-            case 23: return "level23.txt";
-            case 24: return "level24.txt";
-            case 25: return "level25.txt";
-            case 26: return "level26.txt";
-            case 27: return "level27.txt";
-            case 28: return "level28.txt";
-            case 29: return "level29.txt";
-            case 30: return "level30.txt";
-*/
+            case 17: return "libraries/mountains.txt";
+
             // The below line shouldn't ever be accessed, but a default case is required
             default:         return "no_file";
         }
@@ -211,8 +209,8 @@ public class WordBank {
      * This number is required to produce the max range of random values to select from for
      * use in getGameWord().
      * @param file_path The location of the file to retrieve the number of lines from,
-     *                  stored in a St  ring object
-     * @return An int containing 1 less than the number of lines in a file
+     *                  stored in a St  ring object.
+     * @return An int containing 1 less than the number of lines in a file.
      */
     public int getNumWords(String file_path) {
         int file_length = 0;
@@ -235,7 +233,7 @@ public class WordBank {
     }
     /**
      * Method that returns the current level that WordBank used to generate the word
-     * @return The current level
+     * @return The current level.
      */
     public int getLevel() { return _level; }
 }

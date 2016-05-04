@@ -8,6 +8,9 @@
     <string name="IV_content_description">Hangman Drawing</string>
     <string name="startscreen_img_description">Start Screen Image</string>
     <string name="endgame_img_description">Game Result Image</string>
+    <string name="animation_pref_note">Disabling this will SIGNIFICANTLY increase the speed of the app\n\n
+        NOTE: Selecting this will restart the app.
+    </string>
 
     <string name="A">A</string>
     <string name="B">B</string>
