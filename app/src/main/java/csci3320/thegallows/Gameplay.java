@@ -66,7 +66,7 @@ public class Gameplay extends Activity implements OnClickListener {
     /**********************************************************************************************/
 
     /**
-     * Stores a constant containing the number of attemps a user has to get a word right. This
+     * Stores a constant containing the number of attempts a user has to get a word right. This
      * can't change unless we make more hangman images. Classically, this number is 6.
      */
     private final int ATTEMPTS_PER_GAME = 6;
@@ -156,7 +156,7 @@ public class Gameplay extends Activity implements OnClickListener {
     /**
      * Stores the number of lifes and hints the user currently has left in a REGULAR or FREEPLAY mode.
      */
-    public int lifes, hints;
+    public int lives, hints;
     /**
      * Stores the String of the word used for gameplay and its associated hint, respectively.
      */
@@ -236,7 +236,7 @@ public class Gameplay extends Activity implements OnClickListener {
         win = getIntent().getBooleanExtra("WIN", true);
         backgroundIfRestart = getIntent().getStringExtra("PREVIOUS_BG");
         LEVEL_NUM = getIntent().getIntExtra("LEVEL", -1);
-        lifes = getIntent().getIntExtra("LIFE", -1);
+        lives = getIntent().getIntExtra("LIFE", -1);
         hints = getIntent().getIntExtra("HINTS", -1);
         warningShowed = getIntent().getBooleanExtra("LIFE_WARNING", false);
         reward_received = getIntent().getBooleanExtra("REWARD", false);
@@ -254,7 +254,7 @@ public class Gameplay extends Activity implements OnClickListener {
 
         // determine if the recursion of Gameplay will terminate if the user looses this instance
         // and notify the user via a Toast warning
-        if ((lifes == 0 && !warningShowed && !isFreeplay())) {
+        if ((lives == 0 && !warningShowed && !isFreeplay())) {
             showToast("LAST TRY!");
             warningShowed = true;
         }
@@ -481,8 +481,8 @@ public class Gameplay extends Activity implements OnClickListener {
                 else {
                     // if lifes is not equal to zero but a loss has occurred, decrement the user's number of lifes
                     // and launch a new Gameplay instance with the same level number
-                    if (lifes != 0) {
-                        lifes--;
+                    if (lives != 0) {
+                        lives--;
                         launchActivity(true);
                     }
                     // if lifes is equal to zero and a loss has occurred, the game is over
@@ -499,8 +499,8 @@ public class Gameplay extends Activity implements OnClickListener {
                 else {
                     // if lifes is not equal to zero during a loss at the last level, decrement the user's number
                     // of lifes and launch a new Gameplay instance with the same level number
-                    if (lifes != 0) {
-                        lifes--;
+                    if (lives != 0) {
+                        lives--;
                         launchActivity(true);
                     }
                     // if lifes is equal to zero and there is a loss at the last level, the game is over
@@ -566,7 +566,7 @@ public class Gameplay extends Activity implements OnClickListener {
         CYCLIC_INTENT.putExtra("WIN", win);
         CYCLIC_INTENT.putExtra("PREVIOUS_BG", backgroundIfRestart);
         CYCLIC_INTENT.putExtra("LEVEL", LEVEL_NUM);
-        CYCLIC_INTENT.putExtra("LIFE", lifes);
+        CYCLIC_INTENT.putExtra("LIFE", lives);
         CYCLIC_INTENT.putExtra("HINTS", hints);
         CYCLIC_INTENT.putExtra("LIFE_WARNING", warningShowed);
         CYCLIC_INTENT.putExtra("REWARD", reward_received);
@@ -821,7 +821,7 @@ public class Gameplay extends Activity implements OnClickListener {
                 break;
             default: // this case really shouldn't ever be reached
                 thisLayout.setBackgroundResource(R.drawable.defaultboard);
-                backgroundIfRestart = "GREEN"; // reminds us taht in SharedPreferences, Green is default
+                backgroundIfRestart = "GREEN"; // reminds us that in SharedPreferences, Green is default
                 break;
         }
     }
@@ -847,7 +847,7 @@ public class Gameplay extends Activity implements OnClickListener {
         hintKey.setOnClickListener(this);
     }
     /**
-     * Method that initializes GameStatusArea, which shows the level, topics, and # of lifes and hints
+     * Method that initializes GameStatusArea, which shows the level, topics, and # of lives and hints
      */
     public void initGameStatusArea() {
         // initialize the hangman ImageView
@@ -856,24 +856,24 @@ public class Gameplay extends Activity implements OnClickListener {
         // create and link the four required TextView areas with their associated View IDs
         TextView LevelText =    (TextView) findViewById(R.id.LevelText),
                  CategoryText = (TextView) findViewById(R.id.CategoryText),
-                 LifesText =    (TextView) findViewById(R.id.LifesText),
+                 LivesText =    (TextView) findViewById(R.id.LifesText),
                  HintsText =    (TextView) findViewById(R.id.HintsText);
 
         // set the typeface for each TextView
         LevelText.setTypeface(chalkTypeFace);
         CategoryText.setTypeface(chalkTypeFace);
-        LifesText.setTypeface(chalkTypeFace);
+        LivesText.setTypeface(chalkTypeFace);
         HintsText.setTypeface(chalkTypeFace);
 
         // at this point, determine if the current level is eligible for a reward
         if ((LEVEL_NUM == 10 || LEVEL_NUM == 15) && !reward_received && !isFreeplay()) {
-            lifes += 2; // reward of 2 lifes
+            lives += 2; // reward of 2 lives
             hints += 2; // reward of 2 hints
             reward_received = true; // set flag that award was granted so it is not granted again of this level
 
             // update the user via Toast's that they are being rewarded
             showToast("Level " + LEVEL_NUM + " reached, Congrats!");
-            Toast.makeText(getApplicationContext(), "+2 LIFES", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "+2 LIVES", Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), "+2 HINTS", Toast.LENGTH_SHORT).show();
         }
 
@@ -885,14 +885,14 @@ public class Gameplay extends Activity implements OnClickListener {
             hintKey.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.erasermark));
         }
 
-        String lifes_str = "", hints_str = "";
+        String lives_str = "", hints_str = "";
 
         // if GAMETYPE == "FREEPLAY", do not show the Level #. if not, do show the level number
         if (isFreeplay()) {
             String level_txt_str = "Freeplay";
             LevelText.setText(level_txt_str);
 
-            // if the mode is Freeplay, we have unlimited hints and lifes, so we can get rid of the
+            // if the mode is Freeplay, we have unlimited hints and lives, so we can get rid of the
             // right area of the GameStatusArea by updating the layout params of the area
             LinearLayout top_left = (LinearLayout) findViewById(R.id.LevelAndCategory);
             top_left.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -906,11 +906,11 @@ public class Gameplay extends Activity implements OnClickListener {
             LevelText.setText(level_info.getLevelString());
             CategoryText.setText(level_info.getLevelCategoryString(level_info.getLevel()));
 
-            lifes_str = "Lifes: " + Integer.toString(lifes);
+            lives_str = "Lives: " + Integer.toString(lives);
             hints_str = "Hints: " + Integer.toString(hints);
         }
 
-        LifesText.setText(lifes_str);
+        LivesText.setText(lives_str);
         HintsText.setText(hints_str);
 
         // initialize the progress bar
