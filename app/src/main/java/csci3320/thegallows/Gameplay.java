@@ -34,7 +34,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.io.InputStream;
 import java.io.IOException;
 import java.util.Random;
 
@@ -851,7 +850,7 @@ public class Gameplay extends Activity implements OnClickListener {
      */
     public void initGameStatusArea() {
         // initialize the hangman ImageView
-        hangman_img = (ImageView) findViewById(R.id.hangman_area);
+        hangman_img = (ImageView) thisLayout.findViewById(R.id.hangman_area);
 
         // create and link the four required TextView areas with their associated View IDs
         TextView LevelText =    (TextView) findViewById(R.id.LevelText),
@@ -1016,11 +1015,11 @@ public class Gameplay extends Activity implements OnClickListener {
                     // based on the size of the WORD, determine how the underline is composed
                     // we want to be sure that the underline will not break into two seperate lines
                     // within the TextView because it would look like there's glitch creating an extra row
-                    if (WORD.length() < 13)
+                    if (WORD.length() < 11)
                         view.setText(R.string.WordUnderline);
-                    else if (WORD.length() >= 13 && WORD.length() < 16)
+                    else if (WORD.length() >= 11 && WORD.length() < 14)
                         view.setText(R.string.WordUnderline2);
-                    else if (WORD.length() >= 16)
+                    else if (WORD.length() >= 14)
                         view.setText(R.string.WordUnderline3);
 
                     // if the jth character of the word is a number of symbol, there's no need for an underline
@@ -1059,9 +1058,6 @@ public class Gameplay extends Activity implements OnClickListener {
             case 5: hangman_file_path = "gameplay_images/stage5.png"; break;
             case 6: hangman_file_path = "gameplay_images/stage6.png";
         }
-
-        // initialize the Hangman ImageView with the one defined in xml
-        hangman_img = (ImageView) findViewById(R.id.hangman_area);
 
         try {
             // put an image in the ImageView by creating a Drawable from the InputStream of the desired image via its file path
